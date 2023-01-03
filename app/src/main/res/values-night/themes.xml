@@ -1,0 +1,19 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.KejaksaanNegeriLuwuTimur" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/green_40</item>
+        <item name="colorPrimaryVariant">@color/yellow_80</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/yellow_80</item>
+        <item name="colorSecondaryVariant">@color/red_50</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/poppins_regular</item>
+
+    </style>
+</resources>
