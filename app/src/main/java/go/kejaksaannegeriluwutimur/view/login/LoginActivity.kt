@@ -1,16 +1,14 @@
 package go.kejaksaannegeriluwutimur.view.login
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import go.kejaksaannegeriluwutimur.R
 import go.kejaksaannegeriluwutimur.util.Constants.Companion.changeStatusBarColor
-import go.kejaksaannegeriluwutimur.view.kepaladesa.fragment.ChatFragment
-import go.kejaksaannegeriluwutimur.view.kepaladesa.fragment.HomeFragment
 import go.kejaksaannegeriluwutimur.view.login.fragment.AdminFragment
+import go.kejaksaannegeriluwutimur.view.login.fragment.KepalaDesaFragment
 
 class LoginActivity : AppCompatActivity() {
     private val tabLayout: TabLayout by lazy { findViewById(R.id.tab_layout_login) }
@@ -25,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
                 androidx.constraintlayout.widget.R.color.material_grey_900
             ), false
         )
-        loadFragment(HomeFragment())
+        loadFragment(KepalaDesaFragment())
         setOnCLick()
     }
 
@@ -36,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
                 //Dipanggil ketika tab memasuki state/keadaan yang dipilih.
 
                 if (tab.text.toString() == getString(R.string.kepala_desa)) {
-                    loadFragment(HomeFragment())
+                    loadFragment(KepalaDesaFragment())
                 } else if (tab.text.toString() == getString(R.string.admin)) {
                     loadFragment(AdminFragment())
                 } else {

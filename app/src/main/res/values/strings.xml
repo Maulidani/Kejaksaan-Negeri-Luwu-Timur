@@ -4,5 +4,9 @@
     <string name="slogan_kejari_luwu_timur">Berintegritas, Memiliki Kapasitas dan Penuh Loyalitas</string>
     <string name="kepala_desa">Kepala Desa</string>
     <string name="admin">Admin</string>
+    <string name="login">Login</string>
+    <string name="masukkan_username">Masukkan username</string>
+    <string name="masukkan_nik_terdaftar">Masukkan NIK terdaftar</string>
+    <string name="masukkan_password">Masukkan password</string>
 
 </resources>
