@@ -2,8 +2,9 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id("com.google.dagger.hilt.android")
+    id 'kotlin-kapt'
 }
-apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-kapt' // outside of plugins
 
 // Allow references to generated code
 kapt {
@@ -61,7 +62,8 @@ dependencies {
     def okhttp_version = '4.10.0'
     implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit_version}"
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:${okhttp_version}")) // bill of materials (BOM)
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:${okhttp_version}"))
+    // bill of materials (BOM)
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
 

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Kejaksaan Negeri Luwu Timur</string>
+    <string name="address_kejari_luwu_timur">Jl. Soekarno Hatta, Desa Puncak Indah Kec. Malili</string>
+    <string name="slogan_kejari_luwu_timur">Berintegritas, Memiliki Kapasitas dan Penuh Loyalitas</string>
+    <string name="kepala_desa">Kepala Desa</string>
+    <string name="admin">Admin</string>
+
 </resources>
