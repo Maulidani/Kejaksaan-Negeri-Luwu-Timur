@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container_view, fragment)
+            replace(R.id.fragment_container_view_login, fragment)
             commit()
         }
     }

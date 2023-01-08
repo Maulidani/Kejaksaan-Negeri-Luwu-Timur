@@ -72,8 +72,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor")
 
     // image loading
-//    def coil_version = '2.2.2'
-//    implementation("io.coil-kt:coil:${coil_version}")
+    def coil_version = '2.2.2'
+    implementation("io.coil-kt:coil:${coil_version}")
 
     // viewmodel & livedata
     def lifecycle_version = "2.5.1"

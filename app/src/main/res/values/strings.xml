@@ -8,5 +8,12 @@
     <string name="masukkan_username">Masukkan username</string>
     <string name="masukkan_nik_terdaftar">Masukkan NIK terdaftar</string>
     <string name="masukkan_password">Masukkan password</string>
+    <string name="home">Home</string>
+    <string name="chat">Chat</string>
+    <string name="layanan">Layanan</string>
+    <string name="layanan_perdata_dan_tata_usaha_negara">Layanan Perdata Dan Tata Usaha Negara</string>
+    <string name="layanan_bidang_intelijen">Layanan Bidang Intelijen</string>
+    <string name="layanan_bidang_tindak_pidana_umum">Layanan Bidang Tindak Pidana Umum</string>
+    <string name="admin_kejaksaan">Admin Kejaksaan</string>
 
 </resources>
