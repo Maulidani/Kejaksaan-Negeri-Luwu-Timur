@@ -25,5 +25,55 @@
     <string name="info_perkara_pidana_umum">Info Perkara Pidana Umum</string>
     <string name="sistem_informasi_tilang">Sistem Informasi Tilang</string>
     <string name="jadwal_pemeriksaan">Jadwal Pemeriksaan</string>
-
+    <string name="deskripsi">Deskripsi</string>
+    <string name="deskripsi_permohonan_mou">Bahwa Kejaksaan RI Sebagai lembaga Negara,selain berperan dalam penegakan hukum juga bertugas dalam mendukung keberhasilan pembangunan nasional melalui pelaksanaan tugas dan fungsi untuk itu Kejaksaan RI dapat menjalin kerjasama dengan lembaga negara, instansi pemerintah di pusat/daerah, BUMN/BUMD Melalui Perjanjian Kerja Sama</string>
+    <string name="ketentuan_pelayanan">Ketentuan Pelayanan</string>
+    <string name="content_ketentuan_pelayanan">- Pelayanan Hukum online ini diberikan untuk memenuhi permintaan lembaga negara, instansi pemerintah di pusat/daerah, BUMN/BUMD, secara tertulis dalam bentuk konsultasi, pendapat dan informasi di bidang hukum Perdata atau Tata Usaha Negara. \n \n
+- Pelayanan Hukum terbatas pada permasalahan Perdata dan Tata Usaha Negara. \n \n
+- Harap menggunakan Email yang Valid, karena Jawaban atas Pertanyaan anda akan dikirimkan melalui Email. \n \n
+- Harap isi data anda dengan sebenar-benarnya. \n \n
+- Pelayanan setiap hari kerja Senin s/d Jum’at jam 08.00 wita s/d 16.00 wita. \n \n
+- Hari Sabtu dan Minggu libur, berikut tanggal merah lainnya. \n \n
+- Jika tidak memenuhi syarat, maka Form Pelayanan Hukum Online anda akan di tolak.</string>
+    <string name="form_pengaduan">FORM PENGADUAN</string>
+    <string name="instansi_pemerintahan">Instansi Pemerintahan</string>
+    <string name="nama_kegiatan">Nama Kegiatan</string>
+    <string name="nilai_kegiatan">Nilai Kegiatan</string>
+    <string name="jadwal_sosialisasi_presentasi_permasalahan">Jadwal Sosialisasi / Presentasi Permasalahan</string>
+    <string name="nama_aliran_dan_kegiatan">Nama Aliran dan Kegiatan</string>
+    <string name="nama_penanggung_jawab">Nama Penanggung Jawab</string>
+    <string name="telepon_instansi">Telepon Instansi</string>
+    <string name="email_instansi">Email Instansi</string>
+    <string name="file_permohonan_mou">File Permohonan MOU (.png/.jpg/.jpeg /.pdf)</string>
+    <string name="upload_ktp">Upload KTP Anda (.png / .jpg / .jpeg / .pdf)</string>
+    <string name="kirim_permohonan">Kirim Permohonan</string>
+    <string name="deskripsi_bantuan_hukum">Bantuan Hukum adalah tugas Jaksa Pengacara Negara dalam bidang Perdata dan Tata Usaha Negara untuk melakukan pemberian jasa hukum kepada Instansi Pemerintah atau Lembaga Negara atau BUMN atau Pejabat Tata Usaha Negara untuk bertindak sebagai Kuasa Pihak dalam perkara Perdata dan Tata Usaha Negara berdasarkan Surat Kuasa Khusus</string>
+    <string name="deskripsi_pertimbangan_hukum">Bahwa Kejaksaan RI Sebagai lembaga Negara,selain berperan dalam penegakan hukum juga bertugas dalam mendukung keberhasilan pembangunan nasional melalui pelaksanaan tugas dan fungsi untuk itu Kejaksaan RI dapat menjalin kerjasama dengan lembaga negara, instansi pemerintah di pusat/daerah, BUMN/BUMD Melalui Perjanjian Kerja Sama</string>
+    <string name="deskripsi_hukum_gratis">Bahwa Kejaksaan RI Sebagai lembaga Negara,selain berperan dalam penegakan hukum juga bertugas dalam mendukung keberhasilan pembangunan nasional melalui pelaksanaan tugas dan fungsi untuk itu Kejaksaan RI dapat menjalin kerjasama dengan lembaga negara, instansi pemerintah di pusat/daerah, BUMN/BUMD Melalui Perjanjian Kerja Sama</string>
+    <string name="input_data_pelayanan_hukum_gratis">Input Data Pelayanan Hukum Gratis</string>
+    <string name="nama_lengkap_anda">Nama Lengkap Anda</string>
+    <string name="alamat_anda">Alamat Anda</string>
+    <string name="nomor_hp_wa">Nomor Hp / WA</string>
+    <string name="email">Email</string>
+    <string name="kategori">Kategori</string>
+    <string name="bentuk_permasalahan_hukum">Bentuk Permasalahan Hukum</string>
+    <string name="detail_permasalahan">Detail Permasalahan</string>
+    <string name="dokumen_terkait">Dokumen terkait (.png /.jpg/.jpeg/.pdf/.rar/.zip)</string>
+    <string name="data_permasalahan">Data Permasalahan</string>
+    <string name="deskripsi_tindakan_hukum_lain">Bahwa Kejaksaan RI Sebagai lembaga Negara,selain berperan dalam penegakan hukum juga bertugas dalam mendukung keberhasilan pembangunan nasional melalui pelaksanaan tugas dan fungsi untuk itu Kejaksaan RI dapat menjalin kerjasama dengan lembaga negara, instansi pemerintah di pusat/daerah, BUMN/BUMD Melalui Perjanjian Kerja Sama</string>
+    <string name="input_data_tindakan_hukum_lain">Input Data Tindakan Hukum Lain</string>
+    <string name="kirim_data">Kirim Data</string>
+    <string name="alamat_lengkap">Alamat Lengkap</string>
+    <string name="tempat_kegiatan">Tempat Kegiatan</string>
+    <string name="keterangan_kegiatan">Keterangan Kegiatan</string>
+    <string name="kirim_pengaduan">Kirim Pengaduan</string>
+    <string name="nama_lengkap_pelapor">Nama Lengkap Pelapor</string>
+    <string name="judul_buku_cetakan">Judul Buku / Cetakan</string>
+    <string name="data_pengaduan_barcet">Data Pengaduan Barcet</string>
+    <string name="penulis_buku_cetakan">Penulis Buku / Cetakan</string>
+    <string name="bentuk">Bentuk</string>
+    <string name="tanggal_terbit">Tanggal Terbit</string>
+    <string name="isi_buku">Isi Buku</string>
+    <string name="kirim_laporan_pengaduan">Kirim Laporan Pengaduan</string>
+    <string name="identitas_pelapor">Identitas Pelapor</string>
 </resources>
