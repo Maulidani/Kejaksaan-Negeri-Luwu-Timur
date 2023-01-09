@@ -15,5 +15,9 @@
     <string name="layanan_bidang_intelijen">Layanan Bidang Intelijen</string>
     <string name="layanan_bidang_tindak_pidana_umum">Layanan Bidang Tindak Pidana Umum</string>
     <string name="admin_kejaksaan">Admin Kejaksaan</string>
+    <string name="layanan_permohonan_mou">Layanan Permohonan MoU</string>
+    <string name="pelayanan_bantuan_hukum">Pelayanan Bantuan Hukum</string>
+    <string name="pelayanan_pertimbangan_hukum">Pelayanan Pertimbangan Hukum</string>
+    <string name="pelayanan_hukum_gratis">Pelayanan Hukum Gratis</string>
 
 </resources>

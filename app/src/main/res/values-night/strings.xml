@@ -1,4 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Kejaksaan Negeri Luwu Timur</string>
+    <string name="address_kejari_luwu_timur">Jl. Soekarno Hatta, Desa Puncak Indah Kec. Malili</string>
+    <string name="slogan_kejari_luwu_timur">Berintegritas, Memiliki Kapasitas dan Penuh Loyalitas</string>
+    <string name="kepala_desa">Kepala Desa</string>
+    <string name="admin">Admin</string>
+    <string name="login">Login</string>
+    <string name="masukkan_username">Masukkan username</string>
+    <string name="masukkan_nik_terdaftar">Masukkan NIK terdaftar</string>
+    <string name="masukkan_password">Masukkan password</string>
+    <string name="home">Home</string>
+    <string name="chat">Chat</string>
+    <string name="layanan">Layanan</string>
+    <string name="layanan_perdata_dan_tata_usaha_negara">Layanan Perdata Dan Tata Usaha Negara</string>
+    <string name="layanan_bidang_intelijen">Layanan Bidang Intelijen</string>
+    <string name="layanan_bidang_tindak_pidana_umum">Layanan Bidang Tindak Pidana Umum</string>
     <string name="admin_kejaksaan">Admin Kejaksaan</string>
+    <string name="layanan_permohonan_mou">Layanan Permohonan MoU</string>
+    <string name="pelayanan_bantuan_hukum">Pelayanan Bantuan Hukum</string>
+    <string name="pelayanan_pertimbangan_hukum">Pelayanan Pertimbangan Hukum</string>
+    <string name="pelayanan_hukum_gratis">Pelayanan Hukum Gratis</string>
+
 </resources>
