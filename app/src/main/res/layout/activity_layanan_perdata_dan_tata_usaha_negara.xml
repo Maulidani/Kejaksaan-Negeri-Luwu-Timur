@@ -278,7 +278,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="12dp"
-                        android:text="Tindakan Hukum Lain"
+                        android:text="@string/tindakan_hukum_lain"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"

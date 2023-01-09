@@ -19,5 +19,11 @@
     <string name="pelayanan_bantuan_hukum">Pelayanan Bantuan Hukum</string>
     <string name="pelayanan_pertimbangan_hukum">Pelayanan Pertimbangan Hukum</string>
     <string name="pelayanan_hukum_gratis">Pelayanan Hukum Gratis</string>
+    <string name="pakem">Pakem</string>
+    <string name="pengawasan_barang_cetakan_dan_perbukuan">Pengawasan Barang Cetakan Dan Perbukuan</string>
+    <string name="tindakan_hukum_lain">Tindakan Hukum Lain</string>
+    <string name="info_perkara_pidana_umum">Info Perkara Pidana Umum</string>
+    <string name="sistem_informasi_tilang">Sistem Informasi Tilang</string>
+    <string name="jadwal_pemeriksaan">Jadwal Pemeriksaan</string>
 
 </resources>
