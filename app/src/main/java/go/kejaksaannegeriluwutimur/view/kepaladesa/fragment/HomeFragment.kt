@@ -29,25 +29,27 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (isAdded) {
-            cardLayananPerdataDanTataUsahaNegara =
-                requireActivity().findViewById(R.id.cv_layanan_pardata_dan_tata_usaha_negara)
-            cardLayananBidangIntelijen =
-                requireActivity().findViewById(R.id.cv_layanan_bidang_intelijen)
-            cardLayananBidangTindakPidanaUmum =
-                requireActivity().findViewById(R.id.cv_layanan_bidang_tindak_pidana_umum)
-
-            cardLayananPerdataDanTataUsahaNegara.setOnClickListener {
-                startActivity(Intent(requireActivity(), LayananPerdataDanTataUsahaNegaraActivity::class.java))
-            }
-            cardLayananBidangIntelijen.setOnClickListener {
-                startActivity(Intent(requireActivity(), LayananBidangIntelijenActivity::class.java))
-            }
-            cardLayananBidangTindakPidanaUmum.setOnClickListener {
-                startActivity(Intent(requireActivity(), LayananBidangTindakPidanaUmumActivity::class.java))
-            }
-
+            setUpUi()
         }
+    }
 
+    private fun setUpUi() {
+        cardLayananPerdataDanTataUsahaNegara =
+            requireActivity().findViewById(R.id.cv_layanan_pardata_dan_tata_usaha_negara)
+        cardLayananBidangIntelijen =
+            requireActivity().findViewById(R.id.cv_layanan_bidang_intelijen)
+        cardLayananBidangTindakPidanaUmum =
+            requireActivity().findViewById(R.id.cv_layanan_bidang_tindak_pidana_umum)
+
+        cardLayananPerdataDanTataUsahaNegara.setOnClickListener {
+            startActivity(Intent(requireActivity(), LayananPerdataDanTataUsahaNegaraActivity::class.java))
+        }
+        cardLayananBidangIntelijen.setOnClickListener {
+            startActivity(Intent(requireActivity(), LayananBidangIntelijenActivity::class.java))
+        }
+        cardLayananBidangTindakPidanaUmum.setOnClickListener {
+            startActivity(Intent(requireActivity(), LayananBidangTindakPidanaUmumActivity::class.java))
+        }
     }
 
 }

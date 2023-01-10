@@ -1,17 +1,19 @@
 package go.kejaksaannegeriluwutimur.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import go.kejaksaannegeriluwutimur.R
-import go.kejaksaannegeriluwutimur.util.Constants.Companion.changeStatusBarColor
+import go.kejaksaannegeriluwutimur.util.Ui.changeStatusBarColor
 import go.kejaksaannegeriluwutimur.view.login.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

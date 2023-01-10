@@ -52,7 +52,7 @@
             app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_password"
+                android:id="@+id/input_password_kepala_desa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:paddingVertical="18dp"
+            android:paddingVertical="16dp"
             android:text="@string/login"
             android:textAllCaps="false"
             app:cornerRadius="12dp"

@@ -76,4 +76,6 @@
     <string name="isi_buku">Isi Buku</string>
     <string name="kirim_laporan_pengaduan">Kirim Laporan Pengaduan</string>
     <string name="identitas_pelapor">Identitas Pelapor</string>
+    <string name="tidak_ada_file_yang_dipilih">Tidak ada file yang dipilih</string>
+    <string name="file_sudah_dipilih">File sudah dipilih</string>
 </resources>

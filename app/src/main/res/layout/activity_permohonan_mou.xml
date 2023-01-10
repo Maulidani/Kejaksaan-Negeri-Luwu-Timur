@@ -308,10 +308,12 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_form"
-                    android:hint=""
+                    android:drawableStart="@drawable/img_pilih_file"
+                    android:drawablePadding="6dp"
+                    android:hint="@string/tidak_ada_file_yang_dipilih"
                     android:inputType="text"
                     android:padding="12dp"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_title_upload_ktp"
@@ -330,10 +332,12 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_form"
-                    android:hint=""
+                    android:drawableStart="@drawable/img_pilih_file"
+                    android:drawablePadding="6dp"
+                    android:hint="@string/tidak_ada_file_yang_dipilih"
                     android:inputType="text"
                     android:padding="12dp"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_kirim_permohonan"

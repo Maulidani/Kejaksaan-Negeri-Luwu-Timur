@@ -20,14 +20,12 @@ class LayananPerdataDanTataUsahaNegaraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_layanan_perdata_dan_tata_usaha_negara)
 
-        setOnClick()
-
+        setUpUi()
     }
 
-    private fun setOnClick() {
+    private fun setUpUi() {
 
         imgBack.setOnClickListener { finish() }
-
         cardLayananPermohonanMoU.setOnClickListener {
             startActivity(Intent(applicationContext, PermohonanMouActivity::class.java))
         }

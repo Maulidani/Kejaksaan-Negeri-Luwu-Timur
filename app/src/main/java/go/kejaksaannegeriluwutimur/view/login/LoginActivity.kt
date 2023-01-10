@@ -5,17 +5,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
+import dagger.hilt.android.AndroidEntryPoint
 import go.kejaksaannegeriluwutimur.R
-import go.kejaksaannegeriluwutimur.util.Constants.Companion.changeStatusBarColor
+import go.kejaksaannegeriluwutimur.util.Ui.changeStatusBarColor
 import go.kejaksaannegeriluwutimur.view.login.fragment.AdminFragment
 import go.kejaksaannegeriluwutimur.view.login.fragment.KepalaDesaFragment
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private val tabLayout: TabLayout by lazy { findViewById(R.id.tab_layout_login) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        setUpUI()
+    }
+
+    private fun setUpUI() {
 
         changeStatusBarColor(
             ContextCompat.getColor(
@@ -24,10 +31,6 @@ class LoginActivity : AppCompatActivity() {
             ), false
         )
         loadFragment(KepalaDesaFragment())
-        setOnCLick()
-    }
-
-    private fun setOnCLick() {
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -50,7 +53,6 @@ class LoginActivity : AppCompatActivity() {
                 //Dipanggil ketika tab yang sudah dipilih, dipilih lagi oleh user.
             }
         })
-
     }
 
     private fun loadFragment(fragment: Fragment) {

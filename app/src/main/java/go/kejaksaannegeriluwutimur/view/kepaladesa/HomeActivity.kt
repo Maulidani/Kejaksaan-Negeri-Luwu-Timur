@@ -1,16 +1,12 @@
 package go.kejaksaannegeriluwutimur.view.kepaladesa
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import go.kejaksaannegeriluwutimur.R
-import go.kejaksaannegeriluwutimur.util.Constants.Companion.changeStatusBarColor
 import go.kejaksaannegeriluwutimur.view.kepaladesa.fragment.ChatFragment
 import go.kejaksaannegeriluwutimur.view.kepaladesa.fragment.HomeFragment
-import go.kejaksaannegeriluwutimur.view.login.fragment.AdminFragment
-import go.kejaksaannegeriluwutimur.view.login.fragment.KepalaDesaFragment
 
 class HomeActivity : AppCompatActivity() {
     private val tabLayout: TabLayout by lazy { findViewById(R.id.tab_layout_menu_home) }

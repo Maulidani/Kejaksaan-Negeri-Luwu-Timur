@@ -18,7 +18,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout_menu_home"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             app:tabGravity="fill"
             app:tabIconTint="@color/gray_90"
             app:tabIndicatorColor="@color/green_40"
