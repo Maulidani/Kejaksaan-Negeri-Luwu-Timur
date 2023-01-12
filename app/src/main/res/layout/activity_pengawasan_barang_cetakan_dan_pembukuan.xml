@@ -202,8 +202,7 @@
                 android:layout_marginTop="4dp"
                 android:background="@drawable/bg_form"
                 android:hint=""
-                android:inputType="textMultiLine"
-                android:maxLines="5"
+                android:inputType="text"
                 android:padding="12dp"
                 android:textSize="14sp" />
 
@@ -240,18 +239,43 @@
                 android:text="@string/tanggal_terbit"
                 android:textColor="@color/black" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_tanggal_terbit"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/bg_form"
-                android:hint=""
-                android:inputType="text"
-                android:padding="12dp"
-                android:textSize="14sp" />
+                android:paddingVertical="12dp">
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_date_tanggal_terbit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:backgroundTint="@color/gray_90"
+                    android:src="@drawable/ic_date_calendar"
+                    android:text="@string/pilih_file"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_tanggal_terbit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_date_tanggal_terbit"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_title_isi_buku"
@@ -271,9 +295,10 @@
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/bg_form"
+                android:gravity="top"
                 android:hint=""
                 android:inputType="textMultiLine"
-                android:maxLines="5"
+                android:minLines="5"
                 android:padding="12dp"
                 android:textSize="14sp" />
 
@@ -287,17 +312,41 @@
                 android:text="@string/dokumen_terkait"
                 android:textColor="@color/black" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_dokumen_terkait"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/bg_form"
-                android:hint=""
-                android:inputType="text"
-                android:padding="12dp"
-                android:textSize="14sp" />
+                android:background="@drawable/bg_form">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_pilih_file_dokumen_terkait"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:backgroundTint="@color/gray_90"
+                    android:text="@string/pilih_file"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_keterangan_form_file_dokumen_terkait"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/tidak_ada_file_yang_dipilih"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/btn_pilih_file_dokumen_terkait"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_kirim_laporan_pengaduan"
