@@ -87,6 +87,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_content_deskripsi" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:paddingBottom="32dp"
                 android:id="@+id/tv_content_ketentuan_pelayanan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

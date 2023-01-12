@@ -22,7 +22,7 @@ class Repository @Inject constructor(
         nama, nomor, email, kegiatan, tempat, alamat, keterangan, dokumen, token
     )
 
-    fun postPengawas(
+    fun postPengawasanBarangCetakanPembukuan(
         nama: RequestBody,
         nomor: RequestBody,
         email: RequestBody,
@@ -38,7 +38,7 @@ class Repository @Inject constructor(
         nama, nomor, email, alamat, judul, penulis, bentuk, tanggal, isi, dokumen, token
     )
 
-    fun postPermohonan(
+    fun postPermohonanMou(
         instansi: RequestBody,
         nama_kegiatan: RequestBody,
         nilai_kegiatan: RequestBody,
@@ -66,8 +66,7 @@ class Repository @Inject constructor(
         token
     )
 
-    fun postPelayanan(
-        user_id: RequestBody,
+    fun postPelayananHukumGratis(
         nama_lengkap: RequestBody,
         alamat: RequestBody,
         nomor: RequestBody,
@@ -77,9 +76,9 @@ class Repository @Inject constructor(
         detail_permasalahan: RequestBody,
         dokumen: MultipartBody.Part,
         ktp: MultipartBody.Part,
+        user_id: RequestBody,
         token: RequestBody,
     ) = apiService.pelayanan(
-        user_id,
         nama_lengkap,
         alamat,
         nomor,
@@ -89,32 +88,33 @@ class Repository @Inject constructor(
         detail_permasalahan,
         dokumen,
         ktp,
+        user_id,
         token
     )
 
-    fun postTindakan(
+    fun postTindakanHukumLain(
         nama_lengkap: RequestBody,
+        alamat: RequestBody,
         nomor: RequestBody,
         email: RequestBody,
-        alamat: RequestBody,
         kategori: RequestBody,
         bentuk_permasalahan: RequestBody,
         detail_permasalahan: RequestBody,
         dokumen: MultipartBody.Part,
-        user_id: RequestBody,
         ktp: MultipartBody.Part,
+        user_id: RequestBody,
         token: RequestBody,
     ) = apiService.tindakan(
         nama_lengkap,
+        alamat,
         nomor,
         email,
-        alamat,
         kategori,
         bentuk_permasalahan,
         detail_permasalahan,
         dokumen,
-        user_id,
         ktp,
+        user_id,
         token
     )
 
@@ -147,7 +147,7 @@ class Repository @Inject constructor(
         token: String,
         idKepalaDesa: Int?,
     ) = apiService.room(
-        token, idKepalaDesa = null
+        token, idKepalaDesa
     )
 
     fun postChat(

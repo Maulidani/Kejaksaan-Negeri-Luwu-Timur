@@ -58,7 +58,6 @@ interface ApiService {
     @Multipart
     @POST("pelayanan")
     fun pelayanan(
-        @Part("user_id") user_id: RequestBody,
         @Part("nama_lengkap") nama_lengkap: RequestBody,
         @Part("alamat") alamat: RequestBody,
         @Part("nomor") nomor: RequestBody,
@@ -68,6 +67,7 @@ interface ApiService {
         @Part("detail_permasalahan") detail_permasalahan: RequestBody,
         @Part dokumen: MultipartBody.Part,
         @Part ktp: MultipartBody.Part,
+        @Part("user_id") user_id: RequestBody,
         @Part("token") token: RequestBody,
     ): Call<Model.Response>
 
@@ -75,15 +75,15 @@ interface ApiService {
     @POST("tindakan")
     fun tindakan(
         @Part("nama_lengkap") nama_lengkap: RequestBody,
+        @Part("alamat") alamat: RequestBody,
         @Part("nomor") nomor: RequestBody,
         @Part("email") email: RequestBody,
-        @Part("alamat") alamat: RequestBody,
         @Part("kategori") kategori: RequestBody,
         @Part("bentuk_permasalahan") bentuk_permasalahan: RequestBody,
         @Part("detail_permasalahan") detail_permasalahan: RequestBody,
         @Part dokumen: MultipartBody.Part,
-        @Part("user_id") user_id: RequestBody,
         @Part ktp: MultipartBody.Part,
+        @Part("user_id") user_id: RequestBody,
         @Part("token") token: RequestBody,
     ): Call<Model.Response>
 

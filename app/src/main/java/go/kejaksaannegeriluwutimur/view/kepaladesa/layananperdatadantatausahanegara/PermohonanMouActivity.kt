@@ -2,13 +2,15 @@ package go.kejaksaannegeriluwutimur.view.kepaladesa.layananperdatadantatausahane
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.provider.OpenableColumns
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -31,6 +33,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.util.*
 
 @AndroidEntryPoint
 class PermohonanMouActivity : AppCompatActivity() {
@@ -40,33 +43,31 @@ class PermohonanMouActivity : AppCompatActivity() {
     private val etInstansiPemerintahan: EditText by lazy { findViewById(R.id.et_instansi_pemerintahan) }
     private val etNamaKegiatan: EditText by lazy { findViewById(R.id.et_nama_kegiatan) }
     private val etNilaiKegiatan: EditText by lazy { findViewById(R.id.et_nilai_kegiatan) }
-    private val etJadwalSosialisasiPresentasiPermasalahan: EditText by lazy { findViewById(R.id.et_jadwal_sosialisasi_presentasi_permasalahan) }
+    private val imgDateJadwalSosialisasiPresentasiPermasalahan: ImageView by lazy { findViewById(R.id.iv_date_jadwal_sosialisasi_presentasi_permasalahan) }
+    private val tvJadwalSosialisasiPresentasiPermasalahan: TextView by lazy { findViewById(R.id.tv_jadwal_sosialisasi_presentasi_permasalahan) }
     private val etNamaAliranDanKegiatan: EditText by lazy { findViewById(R.id.et_nama_aliran_dan_kegiatan) }
     private val etNamaPenanggungJawab: EditText by lazy { findViewById(R.id.et_nama_penanggung_jawab) }
     private val etTeleponInstansi: EditText by lazy { findViewById(R.id.et_telepon_instansi) }
     private val etEmailInstansi: EditText by lazy { findViewById(R.id.et_email_instansi) }
-    private val etFilePermohonanMou: EditText by lazy { findViewById(R.id.et_file_permohonan_mou) }
-    private val etUploadKtp: EditText by lazy { findViewById(R.id.et_upload_ktp) }
+    private val btnPilihFilePermohonan: MaterialButton by lazy { findViewById(R.id.btn_pilih_file_permohonan) }
+    private val btnPilihFileKtp: MaterialButton by lazy { findViewById(R.id.btn_pilih_file_ktp) }
+    private val tvKeteranganFilePermohonan: TextView by lazy { findViewById(R.id.tv_keterangan_form_file_permohonan) }
+    private val tvKeteranganFileKtp: TextView by lazy { findViewById(R.id.tv_keterangan_form_file_ktp) }
     private val btnKirimPermohonan: MaterialButton by lazy { findViewById(R.id.btn_kirim_permohonan) }
     private var isBtnLoading = false
     private var partFilePermohonan: MultipartBody.Part? = null
     private var partKtp: MultipartBody.Part? = null
     private val listFile = arrayOf("file-permohonan", "ktp")
     private var whichFile = ""
+    private var sJadwalSosialisasiPresentasiPermasalahan = ""
 
-    // Initialize result launcher
     private val resultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            // Initialize result data
             val data: Intent? = result.data
-            // check condition
             if (data != null) {
-                // When data is not equal to empty
-                // Get File uri
                 val sUri: Uri? = data.data
-                // Get File path
                 val sPath: String? = sUri?.path
 
                 when (whichFile) {
@@ -75,33 +76,39 @@ class PermohonanMouActivity : AppCompatActivity() {
                         val reqBodyFilePermohonan: RequestBody =
                             file.asRequestBody("*/*".toMediaTypeOrNull())
                         partFilePermohonan = MultipartBody.Part.createFormData(
-                            "param-name", file.name, reqBodyFilePermohonan
+                            "file_permohonan", file.name, reqBodyFilePermohonan
                         )
-                        etFilePermohonanMou.setText(file.name)
-                        etFilePermohonanMou.setTextColor(getColor(R.color.green_40))
+                        sUri.let {
+                            contentResolver.query(it, null, null, null, null)
+                        }?.use {
+                            val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                            val sizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
+                            it.moveToFirst()
+                            val fileInformation =
+                                it.getString(nameIndex) + " | " + it.getString(sizeIndex) + " kb"
+                            tvKeteranganFilePermohonan.text = fileInformation
+                            tvKeteranganFilePermohonan.setTextColor(getColor(R.color.green_40))
+                        }
                         whichFile = ""
-                        Log.d(application.toString(), "Pick file : File permohonan : uri : $sUri")
-                        Log.d(
-                            application.toString(),
-                            "Pick file : File permohonan : uri path : $sPath"
-                        )
-                        Log.d(
-                            application.toString(),
-                            "Pick file : File permohonan : file name : ${file.name}"
-                        )
                     }
                     listFile[1] -> {
                         val file = File(sPath!!)
                         val reqBodyKtp: RequestBody = file.asRequestBody("*/*".toMediaTypeOrNull())
                         partKtp = MultipartBody.Part.createFormData(
-                            "param-name", file.name, reqBodyKtp
+                            "ktp", file.name, reqBodyKtp
                         )
-                        etUploadKtp.setText(file.name)
-                        etUploadKtp.setTextColor(getColor(R.color.green_40))
+                        sUri.let {
+                            contentResolver.query(it, null, null, null, null)
+                        }?.use {
+                            val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                            val sizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
+                            it.moveToFirst()
+                            val fileInformation =
+                                it.getString(nameIndex) + " | " + it.getString(sizeIndex) + " kb"
+                            tvKeteranganFileKtp.text = fileInformation
+                            tvKeteranganFileKtp.setTextColor(getColor(R.color.green_40))
+                        }
                         whichFile = ""
-                        Log.d(application.toString(), "Pick file : Ktp : uri : $sUri")
-                        Log.d(application.toString(), "Pick file : Ktp : uri path : $sPath")
-                        Log.d(application.toString(), "Pick file : Ktp : file name : ${file.name}")
                     }
                     else -> {
                         whichFile = ""
@@ -128,21 +135,25 @@ class PermohonanMouActivity : AppCompatActivity() {
     private fun setUpUi() {
         imgBack.setOnClickListener { finish() }
 
-        etFilePermohonanMou.setOnClickListener {
+        imgDateJadwalSosialisasiPresentasiPermasalahan.setOnClickListener {
+            datePicker(tvJadwalSosialisasiPresentasiPermasalahan)
+        }
+        tvJadwalSosialisasiPresentasiPermasalahan.setOnClickListener {
+            datePicker(tvJadwalSosialisasiPresentasiPermasalahan)
+        }
+        btnPilihFilePermohonan.setOnClickListener {
             checkPermission(listFile[0])
         }
-
-        etUploadKtp.setOnClickListener {
+        btnPilihFileKtp.setOnClickListener {
             checkPermission(listFile[1])
         }
-
         btnKirimPermohonan.setOnClickListener {
             if (!isBtnLoading && checkNullFields()) {
                 permohonanMouViewModel.kirimPermohonanMou(
                     etInstansiPemerintahan.text.toString(),
                     etNamaKegiatan.text.toString(),
                     etNilaiKegiatan.text.toString(),
-                    etJadwalSosialisasiPresentasiPermasalahan.text.toString(),
+                    sJadwalSosialisasiPresentasiPermasalahan,
                     etNamaAliranDanKegiatan.text.toString(),
                     etNamaPenanggungJawab.text.toString(),
                     etTeleponInstansi.text.toString(),
@@ -152,7 +163,6 @@ class PermohonanMouActivity : AppCompatActivity() {
                     partKtp!!,
                     "token",
                 )
-
             } else {
                 Toast.makeText(applicationContext, "Lengkapi semua data", Toast.LENGTH_SHORT).show()
             }
@@ -219,10 +229,7 @@ class PermohonanMouActivity : AppCompatActivity() {
                 )
                 false
             }
-            etJadwalSosialisasiPresentasiPermasalahan.text.isNullOrEmpty() -> {
-                etJadwalSosialisasiPresentasiPermasalahan.setError(
-                    "Tidak boleh kosong", null
-                )
+            tvJadwalSosialisasiPresentasiPermasalahan.text.isNullOrEmpty() -> {
                 false
             }
             etNamaAliranDanKegiatan.text.isNullOrEmpty() -> {
@@ -249,16 +256,13 @@ class PermohonanMouActivity : AppCompatActivity() {
                 )
                 false
             }
-            partFilePermohonan != null -> {
-                etFilePermohonanMou.setError(
-                    "Tidak boleh kosong", null
-                )
+            partFilePermohonan == null -> {
                 false
             }
-            partKtp != null -> {
-                etUploadKtp.setError(
-                    "Tidak boleh kosong", null
-                )
+            partKtp == null -> {
+                false
+            }
+            sJadwalSosialisasiPresentasiPermasalahan == "" -> {
                 false
             }
             else -> {
@@ -267,46 +271,56 @@ class PermohonanMouActivity : AppCompatActivity() {
         }
     }
 
+    private fun datePicker(field: TextView) {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, yearTahun, monthOfYear, dayOfMonth ->
+                val sField = ("$dayOfMonth/" + monthOfYear + 1 + "/$yearTahun")
+                field.text = sField
+                val sDate = ("$yearTahun/" + monthOfYear + 1 + "/$dayOfMonth")
+                sJadwalSosialisasiPresentasiPermasalahan = sDate
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.show()
+    }
+
     private fun setFieldEnabled(isEnabled: Boolean) {
         etInstansiPemerintahan.isEnabled = isEnabled
         etNamaKegiatan.isEnabled = isEnabled
         etNilaiKegiatan.isEnabled = isEnabled
-        etJadwalSosialisasiPresentasiPermasalahan.isEnabled = isEnabled
         etNamaAliranDanKegiatan.isEnabled = isEnabled
         etNamaPenanggungJawab.isEnabled = isEnabled
         etTeleponInstansi.isEnabled = isEnabled
         etEmailInstansi.isEnabled = isEnabled
-        etFilePermohonanMou.isEnabled = isEnabled
-        etUploadKtp.isEnabled = isEnabled
     }
 
     private fun checkPermission(listFile: String) {
-        // check condition
         if (ActivityCompat.checkSelfPermission(
                 applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // When permission is not granted
-            // Result permission
             ActivityCompat.requestPermissions(
                 this, arrayOf(
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 ), 1
             )
         } else {
-            // When permission is granted
-            // Create method
             whichFile = listFile
             selectFile()
         }
     }
 
     private fun selectFile() {
-        // Initialize intent
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        // set type
         intent.type = "*/*"
-        // Launch intent
         resultLauncher.launch(intent)
     }
 
@@ -315,16 +329,11 @@ class PermohonanMouActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        // check condition
         if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            // When permission is granted
-            // Call method
             selectFile()
         } else {
-            // When permission is denied
-            // Display toast
             Toast.makeText(
-                applicationContext, "Permission Denied", Toast.LENGTH_SHORT
+                applicationContext, "Akses file tidak diizinkan", Toast.LENGTH_SHORT
             ).show()
         }
     }

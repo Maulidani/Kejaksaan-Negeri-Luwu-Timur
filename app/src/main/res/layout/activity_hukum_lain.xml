@@ -104,7 +104,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_content_ketentuan_pelayanan">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_title_input_data_tindakan_hukum_lain"
+                    android:id="@+id/tv_title_input_data_pelayanan_hukum_lain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
@@ -147,7 +147,7 @@
                     android:textColor="@color/black" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_nalamat"
+                    android:id="@+id/et_alamat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="32dp"
@@ -176,7 +176,7 @@
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_form"
                     android:hint=""
-                    android:inputType="text"
+                    android:inputType="number"
                     android:padding="12dp"
                     android:textSize="14sp" />
 
@@ -198,7 +198,7 @@
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_form"
                     android:hint=""
-                    android:inputType="text"
+                    android:inputType="textEmailSubject"
                     android:padding="12dp"
                     android:textSize="14sp" />
 
@@ -214,95 +214,6 @@
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_kategori"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_form"
-                    android:hint=""
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_title_nama_penanggung_jawab"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="32dp"
-                    android:text="@string/nama_penanggung_jawab"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_nama_penanggung_jawab"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_form"
-                    android:hint=""
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_title_telepon_instansi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="32dp"
-                    android:text="@string/telepon_instansi"
-                    android:textColor="@color/black" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_telepon_instansi"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_form"
-                    android:hint=""
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_title_email_instansi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="32dp"
-                    android:text="@string/email_instansi"
-                    android:textColor="@color/black" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_email_instansi"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_form"
-                    android:hint=""
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_title_file_permohonan_mou"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="32dp"
-                    android:text="@string/file_permohonan_mou"
-                    android:textColor="@color/black" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_file_permohonan_mou"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="32dp"
@@ -366,7 +277,7 @@
                     android:gravity="top"
                     android:hint=""
                     android:inputType="textMultiLine"
-                    android:maxLines="5"
+                    android:minLines="5"
                     android:padding="12dp"
                     android:textSize="14sp" />
 
@@ -380,17 +291,40 @@
                     android:text="@string/dokumen_terkait"
                     android:textColor="@color/black" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_dokumen_terkait"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_form"
-                    android:hint=""
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textSize="14sp" />
+                    android:background="@drawable/bg_form">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_pilih_file_dokumen_terkait"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:backgroundTint="@color/gray_90"
+                        android:text="@string/pilih_file"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_keterangan_form_file_dokumen_terkait"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/tidak_ada_file_yang_dipilih"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/btn_pilih_file_dokumen_terkait"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_title_upload_ktp"
@@ -402,17 +336,40 @@
                     android:text="@string/upload_ktp"
                     android:textColor="@color/black" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_upload_ktp"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_form"
-                    android:hint=""
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textSize="14sp" />
+                    android:background="@drawable/bg_form">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_pilih_file_ktp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:backgroundTint="@color/gray_90"
+                        android:text="@string/pilih_file"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_keterangan_form_file_ktp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/tidak_ada_file_yang_dipilih"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/btn_pilih_file_ktp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_kirim_data"
@@ -421,12 +378,10 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="32dp"
-                    android:paddingVertical="18dp"
+                    android:paddingVertical="16dp"
                     android:text="@string/kirim_data"
                     android:textAllCaps="false"
-                    app:cornerRadius="12dp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_upload_ktp" />
+                    app:cornerRadius="12dp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

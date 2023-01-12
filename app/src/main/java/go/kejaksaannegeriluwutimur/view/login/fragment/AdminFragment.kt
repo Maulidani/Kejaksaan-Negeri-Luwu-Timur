@@ -87,7 +87,11 @@ class AdminFragment : Fragment() {
                 if (state.data?.data?.roles == roles) {
                     startActivity(Intent(requireActivity(), AdminHomeActivity::class.java))
                 } else {
-                    Toast.makeText(requireContext(), "Username atau Password salah", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Username atau Password salah",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 isBtnLoading = false
                 btnLogin.setShowProgress(false, "Login")

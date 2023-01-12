@@ -190,17 +190,43 @@
                     android:text="@string/jadwal_sosialisasi_presentasi_permasalahan"
                     android:textColor="@color/black" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_jadwal_sosialisasi_presentasi_permasalahan"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_form"
-                    android:hint=""
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textSize="14sp" />
+                    android:paddingVertical="12dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_date_jadwal_sosialisasi_presentasi_permasalahan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:backgroundTint="@color/gray_90"
+                        android:src="@drawable/ic_date_calendar"
+                        android:text="@string/pilih_file"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_jadwal_sosialisasi_presentasi_permasalahan"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/iv_date_jadwal_sosialisasi_presentasi_permasalahan"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_title_nama_aliran_dan_kegiatan"
@@ -265,7 +291,7 @@
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_form"
                     android:hint=""
-                    android:inputType="text"
+                    android:inputType="number"
                     android:padding="12dp"
                     android:textSize="14sp" />
 
@@ -287,7 +313,7 @@
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_form"
                     android:hint=""
-                    android:inputType="text"
+                    android:inputType="textEmailSubject"
                     android:padding="12dp"
                     android:textSize="14sp" />
 
@@ -301,19 +327,40 @@
                     android:text="@string/file_permohonan_mou"
                     android:textColor="@color/black" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_file_permohonan_mou"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_form"
-                    android:drawableStart="@drawable/img_pilih_file"
-                    android:drawablePadding="6dp"
-                    android:hint="@string/tidak_ada_file_yang_dipilih"
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:background="@drawable/bg_form">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_pilih_file_permohonan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:backgroundTint="@color/gray_90"
+                        android:text="@string/pilih_file"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_keterangan_form_file_permohonan"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/tidak_ada_file_yang_dipilih"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/btn_pilih_file_permohonan"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_title_upload_ktp"
@@ -325,19 +372,40 @@
                     android:text="@string/upload_ktp"
                     android:textColor="@color/black" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_upload_ktp"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_form"
-                    android:drawableStart="@drawable/img_pilih_file"
-                    android:drawablePadding="6dp"
-                    android:hint="@string/tidak_ada_file_yang_dipilih"
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textSize="12sp" />
+                    android:background="@drawable/bg_form">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_pilih_file_ktp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:backgroundTint="@color/gray_90"
+                        android:text="@string/pilih_file"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_keterangan_form_file_ktp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/tidak_ada_file_yang_dipilih"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/btn_pilih_file_ktp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_kirim_permohonan"
@@ -346,12 +414,10 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="32dp"
-                    android:paddingVertical="18dp"
+                    android:paddingVertical="16dp"
                     android:text="@string/kirim_permohonan"
                     android:textAllCaps="false"
-                    app:cornerRadius="12dp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_upload_ktp" />
+                    app:cornerRadius="12dp"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

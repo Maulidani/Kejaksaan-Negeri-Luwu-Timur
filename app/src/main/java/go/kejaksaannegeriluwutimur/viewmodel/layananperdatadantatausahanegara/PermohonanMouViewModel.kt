@@ -57,7 +57,7 @@ class PermohonanMouViewModel @Inject constructor(private val repository: Reposit
         val partuserId: RequestBody = userId.toRequestBody("text/plain".toMediaTypeOrNull())
         val partToken: RequestBody = token.toRequestBody("text/plain".toMediaTypeOrNull())
 
-        val client = repository.postPermohonan(
+        val client = repository.postPermohonanMou(
             partInstansiPemerintahan,
             partnamaKegiatan,
             partnilaiKegiatan,

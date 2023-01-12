@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">Kejaksaan Negeri Luwu Timur</string>
+    <string name="app_name">LABAGA</string>
+    <string name="kejaksaan_negeri_luwu_timur">Kejaksaan Negeri Luwu Timur</string>
+    <string name="layanan_bantuan_hukum_gratis">Layanan dan Bantuan Hukum Gratis</string>
     <string name="address_kejari_luwu_timur">Jl. Soekarno Hatta, Desa Puncak Indah Kec. Malili</string>
     <string name="slogan_kejari_luwu_timur">Berintegritas, Memiliki Kapasitas dan Penuh Loyalitas</string>
     <string name="kepala_desa">Kepala Desa</string>
@@ -78,4 +80,5 @@
     <string name="identitas_pelapor">Identitas Pelapor</string>
     <string name="tidak_ada_file_yang_dipilih">Tidak ada file yang dipilih</string>
     <string name="file_sudah_dipilih">File sudah dipilih</string>
+    <string name="pilih_file">Pilih File</string>
 </resources>

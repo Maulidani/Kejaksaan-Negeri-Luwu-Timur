@@ -108,7 +108,7 @@ class KepalaDesaFragment : Fragment() {
 
                 // test
                 CoroutineScope(Dispatchers.Main).launch {
-                    delay(1000)
+                    delay(2000)
                     isBtnLoading = false
                     btnLogin.setShowProgress(false, "Login")
                     startActivity(Intent(requireActivity(), HomeActivity::class.java))
