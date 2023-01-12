@@ -173,6 +173,9 @@ class HukumGratisActivity : AppCompatActivity() {
                 setFieldEnabled(false)
             }
             is ScreenState.Success -> {
+                if (state.data?.message == "Token Kadaluwarsa") {
+                    // logout
+                }
                 isBtnLoading = false
                 btnKirimData.setShowProgress(false, "Kirim Data")
                 setFieldEnabled(true)

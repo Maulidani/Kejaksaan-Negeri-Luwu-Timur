@@ -88,6 +88,9 @@ class KepalaDesaFragment : Fragment() {
                 inputPassword.isEnabled = false
             }
             is ScreenState.Success -> {
+                if (state.data?.message == "Token Kadaluwarsa") {
+                    // logout
+                }
                 if (state.data?.data?.roles == roles) {
                     startActivity(Intent(requireActivity(), HomeActivity::class.java))
                 } else {

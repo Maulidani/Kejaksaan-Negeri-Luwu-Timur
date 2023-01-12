@@ -183,6 +183,9 @@ class PermohonanMouActivity : AppCompatActivity() {
                 setFieldEnabled(false)
             }
             is ScreenState.Success -> {
+                if (state.data?.message == "Token Kadaluwarsa") {
+                    // logout
+                }
                 isBtnLoading = false
                 btnKirimPermohonan.setShowProgress(false, "Kirim Permohonan")
                 setFieldEnabled(true)
