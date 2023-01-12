@@ -25,6 +25,7 @@ class AdminFragment : Fragment() {
     private lateinit var btnLogin: MaterialButton
     private lateinit var inputUsername: TextInputEditText
     private lateinit var inputPassword: TextInputEditText
+    private var isBtnLoading = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,19 +50,21 @@ class AdminFragment : Fragment() {
         inputPassword = requireActivity().findViewById(R.id.input_password_admin)
 
         btnLogin.setOnClickListener {
-            val username: String
-            val password: String
+            if (!isBtnLoading) {
+                val username: String
+                val password: String
 
-            if (inputUsername.text.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), "Lengkapi data username", Toast.LENGTH_SHORT)
-                    .show()
-            } else if (inputPassword.text.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), "Lengkapi data password", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                username = inputUsername.text.toString()
-                password = inputPassword.text.toString()
-                loginViewModel.login(username, password)
+                if (inputUsername.text.isNullOrEmpty()) {
+                    Toast.makeText(requireContext(), "Lengkapi data username", Toast.LENGTH_SHORT)
+                        .show()
+                } else if (inputPassword.text.isNullOrEmpty()) {
+                    Toast.makeText(requireContext(), "Lengkapi data password", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    username = inputUsername.text.toString()
+                    password = inputPassword.text.toString()
+                    loginViewModel.login(username, password)
+                }
             }
         }
     }
@@ -75,10 +78,10 @@ class AdminFragment : Fragment() {
     private fun processLoginResponse(state: ScreenState<Model.Response>) {
         when (state) {
             is ScreenState.Loading -> {
+                isBtnLoading = true
                 btnLogin.setShowProgress(true, null)
                 inputUsername.isEnabled = false
                 inputPassword.isEnabled = false
-                btnLogin.isEnabled = false
             }
             is ScreenState.Success -> {
                 if (state.data?.data?.roles == roles) {
@@ -86,18 +89,19 @@ class AdminFragment : Fragment() {
                 } else {
                     Toast.makeText(requireContext(), "Username atau Password salah", Toast.LENGTH_SHORT).show()
                 }
+                isBtnLoading = false
                 btnLogin.setShowProgress(false, "Login")
                 inputUsername.isEnabled = true
                 inputPassword.isEnabled = true
-                btnLogin.isEnabled = true
             }
             is ScreenState.Error -> {
+                isBtnLoading = false
                 btnLogin.setShowProgress(false, "Login")
-//                inputUsername.isEnabled = true
-//                inputPassword.isEnabled = true
-//                btnLogin.isEnabled = true
-//                Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                inputUsername.isEnabled = true
+                inputPassword.isEnabled = true
+                Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
 
+                // test
                 startActivity(Intent(requireActivity(), AdminHomeActivity::class.java))
             }
         }

@@ -33,8 +33,8 @@ class PermohonanMouViewModel @Inject constructor(private val repository: Reposit
         teleponInstansi: String,
         emailInstansi: String,
         userId: String,
-        filePermohonan: MultipartBody.Part,
-        ktp: MultipartBody.Part,
+        partFilePermohonan: MultipartBody.Part,
+        partKtp: MultipartBody.Part,
         token: String,
     ) {
         _dataResponse.postValue(ScreenState.Loading(null))
@@ -67,8 +67,8 @@ class PermohonanMouViewModel @Inject constructor(private val repository: Reposit
             partteleponInstansi,
             partemailInstansi,
             partuserId,
-            filePermohonan,
-            ktp,
+            partFilePermohonan,
+            partKtp,
             partToken
         )
         client.enqueue(object : Callback<Model.Response> {

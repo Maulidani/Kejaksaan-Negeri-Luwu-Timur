@@ -29,6 +29,7 @@ class KepalaDesaFragment : Fragment() {
     private lateinit var btnLogin: MaterialButton
     private lateinit var inputNik: TextInputEditText
     private lateinit var inputPassword: TextInputEditText
+    private var isBtnLoading = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,19 +54,21 @@ class KepalaDesaFragment : Fragment() {
         inputPassword = requireActivity().findViewById(R.id.input_password_kepala_desa)
 
         btnLogin.setOnClickListener {
-            val nik: String
-            val password: String
+            if (!isBtnLoading) {
+                val nik: String
+                val password: String
 
-            if (inputNik.text.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), "Lengkapi data nik", Toast.LENGTH_SHORT).show()
-            } else if (inputPassword.text.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), "Lengkapi data password", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                nik = inputNik.text.toString()
-                password = inputPassword.text.toString()
+                if (inputNik.text.isNullOrEmpty()) {
+                    Toast.makeText(requireContext(), "Lengkapi data nik", Toast.LENGTH_SHORT).show()
+                } else if (inputPassword.text.isNullOrEmpty()) {
+                    Toast.makeText(requireContext(), "Lengkapi data password", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    nik = inputNik.text.toString()
+                    password = inputPassword.text.toString()
 
-                loginViewModel.login(nik, password)
+                    loginViewModel.login(nik, password)
+                }
             }
         }
     }
@@ -79,10 +82,10 @@ class KepalaDesaFragment : Fragment() {
     private fun processLoginResponse(state: ScreenState<Model.Response>) {
         when (state) {
             is ScreenState.Loading -> {
+                isBtnLoading = true
                 btnLogin.setShowProgress(true, null)
                 inputNik.isEnabled = false
                 inputPassword.isEnabled = false
-                btnLogin.isEnabled = false
             }
             is ScreenState.Success -> {
                 if (state.data?.data?.roles == roles) {
@@ -91,22 +94,23 @@ class KepalaDesaFragment : Fragment() {
                     Toast.makeText(requireContext(), "Nik atau Password salah", Toast.LENGTH_SHORT)
                         .show()
                 }
+                isBtnLoading = false
                 btnLogin.setShowProgress(false, "Login")
                 inputNik.isEnabled = true
                 inputPassword.isEnabled = true
-                btnLogin.isEnabled = true
             }
             is ScreenState.Error -> {
+//                isBtnLoading = false
 //                btnLogin.setShowProgress(false, "Login")
 //                inputNik.isEnabled = true
 //                inputPassword.isEnabled = true
-//                btnLogin.isEnabled = true
 //                Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
 
+                // test
                 CoroutineScope(Dispatchers.Main).launch {
                     delay(1000)
+                    isBtnLoading = false
                     btnLogin.setShowProgress(false, "Login")
-                    btnLogin.isEnabled = true
                     startActivity(Intent(requireActivity(), HomeActivity::class.java))
                 }
             }

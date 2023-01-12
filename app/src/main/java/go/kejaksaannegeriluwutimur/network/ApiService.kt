@@ -124,9 +124,10 @@ interface ApiService {
         @Field("token") token: String,
     ): Call<Model.Response>
 
-    @GET("chat/load/{token}")
+    @GET("chat/load/{token}/{room-id}")
     fun loadChat(
-        @Path("token") token: String
+        @Path("token") token: String,
+        @Path("room-id") roomId: String
     ): Call<Model.DataArrayResponse>
 
     @GET("chat/listAdmin/{token}")
