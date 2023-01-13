@@ -1,8 +1,11 @@
 package go.kejaksaannegeriluwutimur.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import go.kejaksaannegeriluwutimur.network.ApiService
 import go.kejaksaannegeriluwutimur.repository.Repository
@@ -24,10 +27,10 @@ object AppModule {
 //    @Provides
 //    fun provideBaseUrl() = BASE_URL
 //
-//    @Singleton
-//    @Provides
-//    fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences =
-//        context.getSharedPreferences("preferences_name", Context.MODE_PRIVATE)
+    @Singleton
+    @Provides
+    fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences =
+        context.getSharedPreferences("preferences_name", Context.MODE_PRIVATE)
     
     @Singleton
     @Provides

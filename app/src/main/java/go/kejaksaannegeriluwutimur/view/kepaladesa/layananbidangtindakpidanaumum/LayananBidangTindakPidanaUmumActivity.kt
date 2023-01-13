@@ -1,13 +1,12 @@
 package go.kejaksaannegeriluwutimur.view.kepaladesa.layananbidangtindakpidanaumum
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import go.kejaksaannegeriluwutimur.R
-import go.kejaksaannegeriluwutimur.view.kepaladesa.layananbidangintelijen.PakemActivity
-import go.kejaksaannegeriluwutimur.view.kepaladesa.layananbidangintelijen.PengawasanBarangCetakanDanPembukuanActivity
+import go.kejaksaannegeriluwutimur.util.ChatPopUp
 
 class LayananBidangTindakPidanaUmumActivity : AppCompatActivity() {
     private val imgBack: ImageView by lazy { findViewById(R.id.iv_back) }
@@ -20,11 +19,12 @@ class LayananBidangTindakPidanaUmumActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_layanan_bidang_tindak_pidana_umum)
 
-        setOnClick()
+        setUpUI()
 
     }
 
-    private fun setOnClick() {
+    private fun setUpUI() {
+        val chatPopUp = ChatPopUp()
 
         imgBack.setOnClickListener { finish() }
 
@@ -39,7 +39,7 @@ class LayananBidangTindakPidanaUmumActivity : AppCompatActivity() {
         }
 
         cardChat.setOnClickListener {
-            //
+            chatPopUp.show(supportFragmentManager, "Chat pop-up")
         }
 
     }

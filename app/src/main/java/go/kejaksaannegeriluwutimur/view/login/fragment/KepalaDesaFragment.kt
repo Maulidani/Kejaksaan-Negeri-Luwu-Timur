@@ -13,19 +13,15 @@ import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import go.kejaksaannegeriluwutimur.R
 import go.kejaksaannegeriluwutimur.model.Model
+import go.kejaksaannegeriluwutimur.util.Constants.ROLE_KEPALA_DESA
 import go.kejaksaannegeriluwutimur.util.ScreenState
 import go.kejaksaannegeriluwutimur.util.Ui.setShowProgress
 import go.kejaksaannegeriluwutimur.view.kepaladesa.HomeActivity
 import go.kejaksaannegeriluwutimur.viewmodel.login.LoginViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class KepalaDesaFragment : Fragment() {
     private val loginViewModel: LoginViewModel by viewModels()
-    private val roles = "user"
     private lateinit var btnLogin: MaterialButton
     private lateinit var inputNik: TextInputEditText
     private lateinit var inputPassword: TextInputEditText
@@ -88,11 +84,9 @@ class KepalaDesaFragment : Fragment() {
                 inputPassword.isEnabled = false
             }
             is ScreenState.Success -> {
-                if (state.data?.message == "Token Kadaluwarsa") {
-                    // logout
-                }
-                if (state.data?.data?.roles == roles) {
+                if (state.data?.data?.roles == ROLE_KEPALA_DESA) {
                     startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                    activity?.finish()
                 } else {
                     Toast.makeText(requireContext(), "Nik atau Password salah", Toast.LENGTH_SHORT)
                         .show()
@@ -103,18 +97,16 @@ class KepalaDesaFragment : Fragment() {
                 inputPassword.isEnabled = true
             }
             is ScreenState.Error -> {
-//                isBtnLoading = false
-//                btnLogin.setShowProgress(false, "Login")
-//                inputNik.isEnabled = true
-//                inputPassword.isEnabled = true
-//                Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                isBtnLoading = false
+                btnLogin.setShowProgress(false, "Login")
+                inputNik.isEnabled = true
+                inputPassword.isEnabled = true
+                Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
 
                 // test
-                CoroutineScope(Dispatchers.Main).launch {
-                    delay(2000)
-                    isBtnLoading = false
-                    btnLogin.setShowProgress(false, "Login")
+                if (state.message == ROLE_KEPALA_DESA) {
                     startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                    activity?.finish()
                 }
             }
         }

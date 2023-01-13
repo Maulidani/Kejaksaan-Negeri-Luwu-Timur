@@ -81,4 +81,9 @@
     <string name="tidak_ada_file_yang_dipilih">Tidak ada file yang dipilih</string>
     <string name="file_sudah_dipilih">File sudah dipilih</string>
     <string name="pilih_file">Pilih File</string>
+    <string name="ketikkan_pesan">Ketikkan pesan ...</string>
+    <string name="cari_kepala_desa">Cari kepala desa ...</string>
+    <string name="keluar_dari_akun_yang_login">Keluar dari akun yang login ?</string>
+    <string name="tidak">Tidak</string>
+    <string name="ya">Ya</string>
 </resources>

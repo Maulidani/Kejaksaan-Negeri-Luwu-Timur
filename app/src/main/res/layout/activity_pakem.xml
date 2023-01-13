@@ -80,7 +80,7 @@
                 android:layout_marginTop="4dp"
                 android:background="@drawable/bg_form"
                 android:hint=""
-                android:inputType="text"
+                android:inputType="textPersonName"
                 android:padding="12dp"
                 android:textSize="14sp" />
 
@@ -102,7 +102,7 @@
                 android:layout_marginTop="4dp"
                 android:background="@drawable/bg_form"
                 android:hint=""
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="12dp"
                 android:textSize="14sp" />
 

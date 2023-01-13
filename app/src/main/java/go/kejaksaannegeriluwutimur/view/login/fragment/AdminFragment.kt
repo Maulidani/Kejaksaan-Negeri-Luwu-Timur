@@ -13,6 +13,7 @@ import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import go.kejaksaannegeriluwutimur.R
 import go.kejaksaannegeriluwutimur.model.Model
+import go.kejaksaannegeriluwutimur.util.Constants.ROLE_ADMIN
 import go.kejaksaannegeriluwutimur.util.ScreenState
 import go.kejaksaannegeriluwutimur.util.Ui.setShowProgress
 import go.kejaksaannegeriluwutimur.view.admin.AdminHomeActivity
@@ -21,7 +22,6 @@ import go.kejaksaannegeriluwutimur.viewmodel.login.LoginViewModel
 @AndroidEntryPoint
 class AdminFragment : Fragment() {
     private val loginViewModel: LoginViewModel by viewModels()
-    private val roles = "admin"
     private lateinit var btnLogin: MaterialButton
     private lateinit var inputUsername: TextInputEditText
     private lateinit var inputPassword: TextInputEditText
@@ -84,11 +84,9 @@ class AdminFragment : Fragment() {
                 inputPassword.isEnabled = false
             }
             is ScreenState.Success -> {
-                if (state.data?.message == "Token Kadaluwarsa") {
-                    // logout
-                }
-                if (state.data?.data?.roles == roles) {
+                if (state.data?.data?.roles == ROLE_ADMIN) {
                     startActivity(Intent(requireActivity(), AdminHomeActivity::class.java))
+                    activity?.finish()
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -109,7 +107,10 @@ class AdminFragment : Fragment() {
                 Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
 
                 // test
-                startActivity(Intent(requireActivity(), AdminHomeActivity::class.java))
+                if (state.message == ROLE_ADMIN) {
+                    startActivity(Intent(requireActivity(), AdminHomeActivity::class.java))
+                    activity?.finish()
+                }
             }
         }
 

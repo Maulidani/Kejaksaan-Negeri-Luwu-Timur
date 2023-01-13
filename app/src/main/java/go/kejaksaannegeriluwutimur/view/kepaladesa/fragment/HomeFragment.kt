@@ -2,17 +2,20 @@ package go.kejaksaannegeriluwutimur.view.kepaladesa.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import go.kejaksaannegeriluwutimur.R
+import go.kejaksaannegeriluwutimur.util.LogoutPopUp
 import go.kejaksaannegeriluwutimur.view.kepaladesa.layananbidangintelijen.LayananBidangIntelijenActivity
 import go.kejaksaannegeriluwutimur.view.kepaladesa.layananbidangtindakpidanaumum.LayananBidangTindakPidanaUmumActivity
 import go.kejaksaannegeriluwutimur.view.kepaladesa.layananperdatadantatausahanegara.LayananPerdataDanTataUsahaNegaraActivity
 
 class HomeFragment : Fragment() {
+    private lateinit var imgLogout: ImageView
     private lateinit var cardLayananPerdataDanTataUsahaNegara: CardView
     private lateinit var cardLayananBidangIntelijen: CardView
     private lateinit var cardLayananBidangTindakPidanaUmum: CardView
@@ -34,6 +37,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpUi() {
+        val logoutPopUp = LogoutPopUp()
+
+        imgLogout = requireActivity().findViewById(R.id.iv_logout)
+
         cardLayananPerdataDanTataUsahaNegara =
             requireActivity().findViewById(R.id.cv_layanan_pardata_dan_tata_usaha_negara)
         cardLayananBidangIntelijen =
@@ -49,6 +56,10 @@ class HomeFragment : Fragment() {
         }
         cardLayananBidangTindakPidanaUmum.setOnClickListener {
             startActivity(Intent(requireActivity(), LayananBidangTindakPidanaUmumActivity::class.java))
+        }
+
+        imgLogout.setOnClickListener {
+            logoutPopUp.show(requireActivity().supportFragmentManager, "Logout pop-up")
         }
     }
 
