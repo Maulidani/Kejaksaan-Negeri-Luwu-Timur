@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import go.kejaksaannegeriluwutimur.model.Model
 import go.kejaksaannegeriluwutimur.repository.Repository
+import go.kejaksaannegeriluwutimur.util.Constants.MSG_TERJADI_KESALAHAN
 import go.kejaksaannegeriluwutimur.util.Constants.PREF_USER_ID
 import go.kejaksaannegeriluwutimur.util.Constants.PREF_USER_IS_LOGIN
 import go.kejaksaannegeriluwutimur.util.Constants.PREF_USER_ROLE
@@ -27,14 +28,6 @@ class LoginViewModel @Inject constructor(
 
     private var _dataResponse = MutableLiveData<ScreenState<Model.Response>>()
     val dataResponse: LiveData<ScreenState<Model.Response>> get() = _dataResponse
-
-    private val _roleIsLogin = MutableLiveData<String>()
-    val roleIsLogin: LiveData<String>
-        get() = _roleIsLogin
-
-    init {
-        checkLogin()
-    }
 
     fun login(username: String, password: String) {
         _dataResponse.postValue(ScreenState.Loading(null))
@@ -73,7 +66,7 @@ class LoginViewModel @Inject constructor(
                             else -> {
                                 _dataResponse.postValue(
                                     ScreenState.Error(
-                                        "Terjadi kesalahan",
+                                        MSG_TERJADI_KESALAHAN,
                                         null
                                     )
                                 )
@@ -92,7 +85,7 @@ class LoginViewModel @Inject constructor(
             override fun onFailure(call: Call<Model.Response>, t: Throwable) {
                 _dataResponse.postValue(ScreenState.Error(t.message.toString(), null))
 
-                //test
+                // test
                 sp.edit {
                     putString(PREF_USER_ROLE, "user")
                     putInt(PREF_USER_ID, 1)
@@ -104,12 +97,4 @@ class LoginViewModel @Inject constructor(
         })
     }
 
-    private fun checkLogin() {
-        val spUserRole = sp.getString(PREF_USER_ROLE, null)
-        val spUserIsLogin = sp.getBoolean(PREF_USER_IS_LOGIN, false)
-
-        if (spUserIsLogin) {
-            _roleIsLogin.postValue(spUserRole.toString())
-        }
-    }
-}
+  }

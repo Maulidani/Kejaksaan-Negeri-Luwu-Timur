@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import go.kejaksaannegeriluwutimur.model.Model
 import go.kejaksaannegeriluwutimur.repository.Repository
+import go.kejaksaannegeriluwutimur.util.Constants.HUKUM_GRATIS
+import go.kejaksaannegeriluwutimur.util.Constants.HUKUM_LAIN
+import go.kejaksaannegeriluwutimur.util.Constants.MSG_TERJADI_KESALAHAN
 import go.kejaksaannegeriluwutimur.util.ScreenState
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -55,7 +58,7 @@ class HukumGratisDanLainViewModel @Inject constructor(private val repository: Re
 
         var client: Call<Model.Response>? = null
         when (type) {
-            "hukum gratis" -> client = repository.postPelayananHukumGratis(
+            HUKUM_GRATIS -> client = repository.postPelayananHukumGratis(
                 partNamaLengkap,
                 partAlamat,
                 partNomorHpWa,
@@ -68,7 +71,7 @@ class HukumGratisDanLainViewModel @Inject constructor(private val repository: Re
                 partuserId,
                 partToken
             )
-            "hukum lain" -> client = repository.postTindakanHukumLain(
+            HUKUM_LAIN -> client = repository.postTindakanHukumLain(
                 partNamaLengkap,
                 partAlamat,
                 partNomorHpWa,
@@ -81,7 +84,7 @@ class HukumGratisDanLainViewModel @Inject constructor(private val repository: Re
                 partuserId,
                 partToken
             )
-            else -> _dataResponse.postValue(ScreenState.Error("Terjadi kesalahan", null))
+            else -> _dataResponse.postValue(ScreenState.Error(MSG_TERJADI_KESALAHAN, null))
         }
 
         if (client != null) {

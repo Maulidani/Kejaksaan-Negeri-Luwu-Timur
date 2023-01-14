@@ -23,7 +23,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-//    @Singleton
+    //    @Singleton
 //    @Provides
 //    fun provideBaseUrl() = BASE_URL
 //
@@ -31,7 +31,7 @@ object AppModule {
     @Provides
     fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences =
         context.getSharedPreferences("preferences_name", Context.MODE_PRIVATE)
-    
+
     @Singleton
     @Provides
     fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()

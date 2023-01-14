@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import dagger.hilt.android.AndroidEntryPoint
 import go.kejaksaannegeriluwutimur.R
 import go.kejaksaannegeriluwutimur.util.ChatPopUp
 
+@AndroidEntryPoint
 class LayananBidangIntelijenActivity : AppCompatActivity() {
     private val imgBack: ImageView by lazy { findViewById(R.id.iv_back) }
     private val cardPakem: CardView by lazy { findViewById(R.id.cv_item_pakem) }
@@ -19,12 +21,11 @@ class LayananBidangIntelijenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_layanan_bidang_intelijen)
 
         setUpUI()
-
     }
 
     private fun setUpUI() {
         val chatPopUp = ChatPopUp()
-        
+
         imgBack.setOnClickListener { finish() }
 
         cardPakem.setOnClickListener {

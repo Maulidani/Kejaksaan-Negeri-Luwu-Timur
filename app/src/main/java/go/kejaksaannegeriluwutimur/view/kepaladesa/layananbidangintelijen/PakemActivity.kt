@@ -3,6 +3,7 @@ package go.kejaksaannegeriluwutimur.view.kepaladesa.layananbidangintelijen
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -19,8 +20,10 @@ import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import go.kejaksaannegeriluwutimur.R
 import go.kejaksaannegeriluwutimur.model.Model
+import go.kejaksaannegeriluwutimur.util.Constants
 import go.kejaksaannegeriluwutimur.util.ScreenState
 import go.kejaksaannegeriluwutimur.util.Ui.setShowProgress
+import go.kejaksaannegeriluwutimur.view.login.LoginActivity
 import go.kejaksaannegeriluwutimur.view.util.AlertActivity
 import go.kejaksaannegeriluwutimur.viewmodel.layananbidangintelijen.PakemViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -32,9 +35,12 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PakemActivity : AppCompatActivity() {
+    @Inject
+    lateinit var sp: SharedPreferences
     private val pakemViewModel: PakemViewModel by viewModels()
 
     private val imgBack: ImageView by lazy { findViewById(R.id.iv_back) }
@@ -92,6 +98,23 @@ class PakemActivity : AppCompatActivity() {
         setUpObservers()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        isLogin()
+    }
+
+    private fun isLogin() {
+        val isLogin = sp.getBoolean(Constants.PREF_USER_IS_LOGIN, false)
+        val userRole = sp.getString(Constants.PREF_USER_ROLE, null)
+
+        if (!isLogin && userRole != Constants.ROLE_KEPALA_DESA) {
+            Toast.makeText(applicationContext, Constants.MSG_TERJADI_KESALAHAN, Toast.LENGTH_SHORT).show()
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
+            finish()
+        }
+    }
+
     private fun setUpUi() {
         imgBack.setOnClickListener { finish() }
 
@@ -110,7 +133,7 @@ class PakemActivity : AppCompatActivity() {
                     etTempatKegiatan.text.toString(),
                     etKeteranganKegiatan.text.toString(),
                     partFileDokumen!!,
-                    "token",
+                    sp.getString(Constants.PREF_USER_TOKEN, null).toString(),
                 )
             } else {
                 Toast.makeText(applicationContext, "Lengkapi semua data", Toast.LENGTH_SHORT).show()
@@ -132,8 +155,14 @@ class PakemActivity : AppCompatActivity() {
                 setFieldEnabled(false)
             }
             is ScreenState.Success -> {
-                if (state.data?.message == "Token Kadaluwarsa") {
-                    // logout
+                if (state.data?.message == Constants.RESPONSE_TOKEN_SALAH) {
+                    Toast.makeText(
+                        applicationContext,
+                        Constants.MSG_TERJADI_KESALAHAN,
+                        Toast.LENGTH_SHORT
+                    ) .show()
+                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                    finish()
                 }
                 isBtnLoading = false
                 btnKirimPengaduan.setShowProgress(false, "Kirim Pengaduan")

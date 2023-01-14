@@ -63,7 +63,7 @@
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/green_40"
         app:tabTextAppearance="@style/CustomTabAppearance"
-        app:tabTextColor="@color/gray_90">
+        app:tabTextColor="@android:color/darker_gray">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

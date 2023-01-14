@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -20,8 +21,13 @@ import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import go.kejaksaannegeriluwutimur.R
 import go.kejaksaannegeriluwutimur.model.Model
+import go.kejaksaannegeriluwutimur.util.Constants
+import go.kejaksaannegeriluwutimur.util.Constants.PREF_USER_ID
+import go.kejaksaannegeriluwutimur.util.Constants.PREF_USER_TOKEN
+import go.kejaksaannegeriluwutimur.util.Constants.RESPONSE_TOKEN_SALAH
 import go.kejaksaannegeriluwutimur.util.ScreenState
 import go.kejaksaannegeriluwutimur.util.Ui.setShowProgress
+import go.kejaksaannegeriluwutimur.view.login.LoginActivity
 import go.kejaksaannegeriluwutimur.view.util.AlertActivity
 import go.kejaksaannegeriluwutimur.viewmodel.layananperdatadantatausahanegara.PermohonanMouViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -34,9 +40,12 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PermohonanMouActivity : AppCompatActivity() {
+    @Inject
+    lateinit var sp: SharedPreferences
     private val permohonanMouViewModel: PermohonanMouViewModel by viewModels()
 
     private val imgBack: ImageView by lazy { findViewById(R.id.iv_back) }
@@ -132,6 +141,24 @@ class PermohonanMouActivity : AppCompatActivity() {
         setUpObservers()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        isLogin()
+    }
+
+    private fun isLogin() {
+        val isLogin = sp.getBoolean(Constants.PREF_USER_IS_LOGIN, false)
+        val userRole = sp.getString(Constants.PREF_USER_ROLE, null)
+
+        if (!isLogin && userRole != Constants.ROLE_KEPALA_DESA) {
+            Toast.makeText(applicationContext, Constants.MSG_TERJADI_KESALAHAN, Toast.LENGTH_SHORT)
+                .show()
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
+            finish()
+        }
+    }
+
     private fun setUpUi() {
         imgBack.setOnClickListener { finish() }
 
@@ -158,10 +185,10 @@ class PermohonanMouActivity : AppCompatActivity() {
                     etNamaPenanggungJawab.text.toString(),
                     etTeleponInstansi.text.toString(),
                     etEmailInstansi.text.toString(),
-                    "",
+                    sp.getString(PREF_USER_ID, null).toString(),
                     partFilePermohonan!!,
                     partKtp!!,
-                    "token",
+                    sp.getString(PREF_USER_TOKEN, null).toString(),
                 )
             } else {
                 Toast.makeText(applicationContext, "Lengkapi semua data", Toast.LENGTH_SHORT).show()
@@ -183,8 +210,14 @@ class PermohonanMouActivity : AppCompatActivity() {
                 setFieldEnabled(false)
             }
             is ScreenState.Success -> {
-                if (state.data?.message == "Token Kadaluwarsa") {
-                    // logout
+                if (state.data?.message == RESPONSE_TOKEN_SALAH) {
+                    Toast.makeText(
+                        applicationContext,
+                        Constants.MSG_TERJADI_KESALAHAN,
+                        Toast.LENGTH_SHORT
+                    ) .show()
+                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                    finish()
                 }
                 isBtnLoading = false
                 btnKirimPermohonan.setShowProgress(false, "Kirim Permohonan")

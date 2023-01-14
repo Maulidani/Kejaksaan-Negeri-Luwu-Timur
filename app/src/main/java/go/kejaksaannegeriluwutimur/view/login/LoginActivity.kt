@@ -1,15 +1,15 @@
 package go.kejaksaannegeriluwutimur.view.login
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import go.kejaksaannegeriluwutimur.R
+import go.kejaksaannegeriluwutimur.util.Constants
 import go.kejaksaannegeriluwutimur.util.Constants.ROLE_ADMIN
 import go.kejaksaannegeriluwutimur.util.Constants.ROLE_KEPALA_DESA
 import go.kejaksaannegeriluwutimur.util.Ui.changeStatusBarColor
@@ -17,11 +17,12 @@ import go.kejaksaannegeriluwutimur.view.admin.AdminHomeActivity
 import go.kejaksaannegeriluwutimur.view.kepaladesa.HomeActivity
 import go.kejaksaannegeriluwutimur.view.login.fragment.AdminFragment
 import go.kejaksaannegeriluwutimur.view.login.fragment.KepalaDesaFragment
-import go.kejaksaannegeriluwutimur.viewmodel.login.LoginViewModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-    private val loginViewModel: LoginViewModel by viewModels()
+    @Inject
+    lateinit var sp: SharedPreferences
     private val tabLayout: TabLayout by lazy { findViewById(R.id.tab_layout_login) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +30,25 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         setUpUi()
-        setUpObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        isLogin()
+    }
+
+    private fun isLogin() {
+        val isLogin = sp.getBoolean(Constants.PREF_USER_IS_LOGIN, false)
+        val userRole = sp.getString(Constants.PREF_USER_ROLE, null)
+
+        if (isLogin && userRole == ROLE_KEPALA_DESA) {
+            startActivity(Intent(applicationContext, HomeActivity::class.java))
+            finish()
+        } else if (!isLogin && userRole == ROLE_ADMIN) {
+            startActivity(Intent(applicationContext, AdminHomeActivity::class.java))
+            finish()
+        }
     }
 
     private fun setUpUi() {
@@ -62,26 +81,6 @@ class LoginActivity : AppCompatActivity() {
                 //Dipanggil ketika tab yang sudah dipilih, dipilih lagi oleh user.
             }
         })
-    }
-
-    private fun setUpObservers() {
-        loginViewModel.roleIsLogin.observe(this) { role ->
-            when (role) {
-                ROLE_KEPALA_DESA -> {
-                    startActivity(Intent(applicationContext, HomeActivity::class.java))
-                    finish()
-                }
-                ROLE_ADMIN -> {
-                    startActivity(Intent(applicationContext, AdminHomeActivity::class.java))
-                    finish()
-                }
-                else -> {
-                    Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-
-        }
     }
 
     private fun loadFragment(fragment: Fragment) {

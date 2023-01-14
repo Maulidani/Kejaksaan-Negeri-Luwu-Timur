@@ -39,7 +39,6 @@ class PengawasanBarangCetakanDanPembukuanViewModel @Inject constructor(private v
     ) {
         _dataResponse.postValue(ScreenState.Loading(null))
 
-
         val partNamaPelapor: RequestBody =
             namaPelapor.toRequestBody("text/plain".toMediaTypeOrNull())
         val partNomorHpWa: RequestBody = nomorHpWa.toRequestBody("text/plain".toMediaTypeOrNull())
