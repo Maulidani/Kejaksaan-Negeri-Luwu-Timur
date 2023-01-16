@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import go.kejaksaannegeriluwutimur.model.Model
 import go.kejaksaannegeriluwutimur.repository.Repository
+import go.kejaksaannegeriluwutimur.util.Constants
 import go.kejaksaannegeriluwutimur.util.ScreenState
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -77,10 +78,19 @@ class PermohonanMouViewModel @Inject constructor(private val repository: Reposit
                 response: Response<Model.Response>
             ) {
                 if (response.isSuccessful && response.body() != null) {
-                    if (response.body()!!.success) {
+                    if (response.body()!!.message == Constants.RESPONSE_TOKEN_SALAH) {
                         _dataResponse.postValue(ScreenState.Success(response.body()!!))
                     } else {
-                        _dataResponse.postValue(ScreenState.Error(response.body()!!.message, null))
+                        if (response.body()!!.success) {
+                            _dataResponse.postValue(ScreenState.Success(response.body()!!))
+                        } else {
+                            _dataResponse.postValue(
+                                ScreenState.Error(
+                                    response.body()!!.message,
+                                    null
+                                )
+                            )
+                        }
                     }
                 } else {
                     _dataResponse.postValue(ScreenState.Error(response.code().toString(), null))

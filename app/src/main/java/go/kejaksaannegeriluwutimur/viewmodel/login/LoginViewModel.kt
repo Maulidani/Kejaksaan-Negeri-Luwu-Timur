@@ -84,17 +84,8 @@ class LoginViewModel @Inject constructor(
 
             override fun onFailure(call: Call<Model.Response>, t: Throwable) {
                 _dataResponse.postValue(ScreenState.Error(t.message.toString(), null))
-
-                // test
-                sp.edit {
-                    putString(PREF_USER_ROLE, "user")
-                    putInt(PREF_USER_ID, 1)
-                    putString(PREF_USER_TOKEN, "8394839")
-                    putBoolean(PREF_USER_IS_LOGIN, true)
-                }
-                _dataResponse.postValue(ScreenState.Error("user", null))
             }
         })
     }
 
-  }
+}

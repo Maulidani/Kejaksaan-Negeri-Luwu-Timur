@@ -3,6 +3,7 @@ package go.kejaksaannegeriluwutimur.view.login
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -45,10 +46,11 @@ class LoginActivity : AppCompatActivity() {
         if (isLogin && userRole == ROLE_KEPALA_DESA) {
             startActivity(Intent(applicationContext, HomeActivity::class.java))
             finish()
-        } else if (!isLogin && userRole == ROLE_ADMIN) {
+        } else if (isLogin && userRole == ROLE_ADMIN) {
             startActivity(Intent(applicationContext, AdminHomeActivity::class.java))
             finish()
         }
+
     }
 
     private fun setUpUi() {

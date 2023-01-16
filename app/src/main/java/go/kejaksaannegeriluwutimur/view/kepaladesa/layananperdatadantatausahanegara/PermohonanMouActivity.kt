@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.util.Patterns.EMAIL_ADDRESS
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,6 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.edit
+import androidx.documentfile.provider.DocumentFile
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import go.kejaksaannegeriluwutimur.R
@@ -24,21 +27,15 @@ import go.kejaksaannegeriluwutimur.model.Model
 import go.kejaksaannegeriluwutimur.util.Constants
 import go.kejaksaannegeriluwutimur.util.Constants.PREF_USER_ID
 import go.kejaksaannegeriluwutimur.util.Constants.PREF_USER_TOKEN
-import go.kejaksaannegeriluwutimur.util.Constants.RESPONSE_TOKEN_SALAH
 import go.kejaksaannegeriluwutimur.util.ScreenState
+import go.kejaksaannegeriluwutimur.util.SuccessPopUp
 import go.kejaksaannegeriluwutimur.util.Ui.setShowProgress
 import go.kejaksaannegeriluwutimur.view.login.LoginActivity
-import go.kejaksaannegeriluwutimur.view.util.AlertActivity
 import go.kejaksaannegeriluwutimur.viewmodel.layananperdatadantatausahanegara.PermohonanMouViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.util.*
 import javax.inject.Inject
 
@@ -47,6 +44,7 @@ class PermohonanMouActivity : AppCompatActivity() {
     @Inject
     lateinit var sp: SharedPreferences
     private val permohonanMouViewModel: PermohonanMouViewModel by viewModels()
+    private val successPopUp = SuccessPopUp()
 
     private val imgBack: ImageView by lazy { findViewById(R.id.iv_back) }
     private val etInstansiPemerintahan: EditText by lazy { findViewById(R.id.et_instansi_pemerintahan) }
@@ -79,45 +77,85 @@ class PermohonanMouActivity : AppCompatActivity() {
                 val sUri: Uri? = data.data
                 val sPath: String? = sUri?.path
 
+                sUri?.let {
+                    try {
+                        contentResolver.takePersistableUriPermission(
+                            it,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                        )
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Gagal pilih file",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+                val documentFile = sUri?.let { DocumentFile.fromSingleUri(applicationContext, it) }
+                val fileUri = documentFile?.uri
+                val path = fileUri?.path
+                val inputStream = sUri?.let { contentResolver.openInputStream(it) }
+
                 when (whichFile) {
                     listFile[0] -> {
-                        val file = File(sPath!!)
-                        val reqBodyFilePermohonan: RequestBody =
-                            file.asRequestBody("*/*".toMediaTypeOrNull())
-                        partFilePermohonan = MultipartBody.Part.createFormData(
-                            "file_permohonan", file.name, reqBodyFilePermohonan
-                        )
-                        sUri.let {
-                            contentResolver.query(it, null, null, null, null)
-                        }?.use {
-                            val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                            val sizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
-                            it.moveToFirst()
-                            val fileInformation =
-                                it.getString(nameIndex) + " | " + it.getString(sizeIndex) + " kb"
-                            tvKeteranganFilePermohonan.text = fileInformation
-                            tvKeteranganFilePermohonan.setTextColor(getColor(R.color.green_40))
+                        if (documentFile!!.exists()) {
+                            val reqBodyFilePermohonan: RequestBody = inputStream.let {
+                                it!!.readBytes().toRequestBody("*/*".toMediaTypeOrNull(), 0)
+                            }
+                            partFilePermohonan = MultipartBody.Part.createFormData(
+                                "file_permohonan", "file", reqBodyFilePermohonan
+                            )
+                            sUri.let {
+                                contentResolver.query(it, null, null, null, null)
+                            }?.use {
+                                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                                val sizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
+                                it.moveToFirst()
+                                val fileInformation =
+                                    it.getString(nameIndex) + " | " + it.getString(sizeIndex) + " kb"
+                                tvKeteranganFilePermohonan.text = fileInformation
+                                tvKeteranganFilePermohonan.setTextColor(getColor(R.color.green_40))
+                            }
+                            whichFile = ""
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Gagal pilih file",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
                         }
-                        whichFile = ""
+
                     }
                     listFile[1] -> {
-                        val file = File(sPath!!)
-                        val reqBodyKtp: RequestBody = file.asRequestBody("*/*".toMediaTypeOrNull())
-                        partKtp = MultipartBody.Part.createFormData(
-                            "ktp", file.name, reqBodyKtp
-                        )
-                        sUri.let {
-                            contentResolver.query(it, null, null, null, null)
-                        }?.use {
-                            val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                            val sizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
-                            it.moveToFirst()
-                            val fileInformation =
-                                it.getString(nameIndex) + " | " + it.getString(sizeIndex) + " kb"
-                            tvKeteranganFileKtp.text = fileInformation
-                            tvKeteranganFileKtp.setTextColor(getColor(R.color.green_40))
+                        if (documentFile!!.exists()) {
+                            val reqBodyKtp: RequestBody = inputStream.let {
+                                it!!.readBytes().toRequestBody("*/*".toMediaTypeOrNull(), 0)
+                            }
+                            partKtp = MultipartBody.Part.createFormData(
+                                "ktp", "File", reqBodyKtp
+                            )
+                            sUri.let {
+                                contentResolver.query(it, null, null, null, null)
+                            }?.use {
+                                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                                val sizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
+                                it.moveToFirst()
+                                val fileInformation =
+                                    it.getString(nameIndex) + " | " + it.getString(sizeIndex) + " kb"
+                                tvKeteranganFileKtp.text = fileInformation
+                                tvKeteranganFileKtp.setTextColor(getColor(R.color.green_40))
+                            }
+                            whichFile = ""
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Gagal pilih file",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
                         }
-                        whichFile = ""
                     }
                     else -> {
                         whichFile = ""
@@ -175,24 +213,32 @@ class PermohonanMouActivity : AppCompatActivity() {
             checkPermission(listFile[1])
         }
         btnKirimPermohonan.setOnClickListener {
+
             if (!isBtnLoading && checkNullFields()) {
-                permohonanMouViewModel.kirimPermohonanMou(
-                    etInstansiPemerintahan.text.toString(),
-                    etNamaKegiatan.text.toString(),
-                    etNilaiKegiatan.text.toString(),
-                    sJadwalSosialisasiPresentasiPermasalahan,
-                    etNamaAliranDanKegiatan.text.toString(),
-                    etNamaPenanggungJawab.text.toString(),
-                    etTeleponInstansi.text.toString(),
-                    etEmailInstansi.text.toString(),
-                    sp.getString(PREF_USER_ID, null).toString(),
-                    partFilePermohonan!!,
-                    partKtp!!,
-                    sp.getString(PREF_USER_TOKEN, null).toString(),
-                )
+                if (EMAIL_ADDRESS.matcher(etEmailInstansi.text.toString()).matches()) {
+                    permohonanMouViewModel.kirimPermohonanMou(
+                        etInstansiPemerintahan.text.toString(),
+                        etNamaKegiatan.text.toString(),
+                        etNilaiKegiatan.text.toString(),
+                        sJadwalSosialisasiPresentasiPermasalahan,
+                        etNamaAliranDanKegiatan.text.toString(),
+                        etNamaPenanggungJawab.text.toString(),
+                        etTeleponInstansi.text.toString(),
+                        etEmailInstansi.text.toString(),
+                        sp.getInt(PREF_USER_ID, 0).toString(),
+                        partFilePermohonan!!,
+                        partKtp!!,
+                        sp.getString(PREF_USER_TOKEN, null).toString(),
+                    )
+                } else {
+                    Toast.makeText(applicationContext, "Email tidak valid", Toast.LENGTH_SHORT)
+                        .show()
+                }
             } else {
-                Toast.makeText(applicationContext, "Lengkapi semua data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Lengkapi semua data", Toast.LENGTH_SHORT)
+                    .show()
             }
+
         }
     }
 
@@ -210,37 +256,27 @@ class PermohonanMouActivity : AppCompatActivity() {
                 setFieldEnabled(false)
             }
             is ScreenState.Success -> {
-                if (state.data?.message == RESPONSE_TOKEN_SALAH) {
+                isBtnLoading = false
+                btnKirimPermohonan.setShowProgress(false, "Kirim Permohonan")
+                setFieldEnabled(true)
+                successPopUp.show(supportFragmentManager, "Chat pop-up")
+
+                if (state.data?.message == Constants.RESPONSE_TOKEN_SALAH) {
                     Toast.makeText(
                         applicationContext,
                         Constants.MSG_TERJADI_KESALAHAN,
                         Toast.LENGTH_SHORT
-                    ) .show()
+                    ).show()
+                    sp.edit { clear() }
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
                     finish()
                 }
+            }
+            is ScreenState.Error -> {
                 isBtnLoading = false
                 btnKirimPermohonan.setShowProgress(false, "Kirim Permohonan")
                 setFieldEnabled(true)
-            }
-            is ScreenState.Error -> {
-//                isBtnLoading = false
-//                btnKirimPermohonan.setShowProgress(false, "Kirim Permohonan")
-//                setFieldEnabled(true)
-//                Toast.makeText(applicationContext, state.message, Toast.LENGTH_SHORT).show()
-
-                CoroutineScope(Dispatchers.Main).launch {
-                    delay(2000)
-                    isBtnLoading = false
-                    btnKirimPermohonan.setShowProgress(false, "Kirim Permohonan")
-                    setFieldEnabled(true)
-                    startActivity(
-                        Intent(applicationContext, AlertActivity::class.java).putExtra(
-                            "name", ""
-                        )
-                    )
-                }
-
+                Toast.makeText(applicationContext, state.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -314,16 +350,12 @@ class PermohonanMouActivity : AppCompatActivity() {
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
-            this,
-            { _, yearTahun, monthOfYear, dayOfMonth ->
+            this, { _, yearTahun, monthOfYear, dayOfMonth ->
                 val sField = ("$dayOfMonth/" + monthOfYear + 1 + "/$yearTahun")
                 field.text = sField
                 val sDate = ("$yearTahun/" + monthOfYear + 1 + "/$dayOfMonth")
                 sJadwalSosialisasiPresentasiPermasalahan = sDate
-            },
-            year,
-            month,
-            day
+            }, year, month, day
         )
         datePickerDialog.show()
     }
@@ -355,8 +387,10 @@ class PermohonanMouActivity : AppCompatActivity() {
     }
 
     private fun selectFile() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*/*"
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+        }
         resultLauncher.launch(intent)
     }
 

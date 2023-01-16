@@ -105,12 +105,6 @@ class AdminFragment : Fragment() {
                 inputUsername.isEnabled = true
                 inputPassword.isEnabled = true
                 Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
-
-                // test
-                if (state.message == ROLE_ADMIN) {
-                    startActivity(Intent(requireActivity(), AdminHomeActivity::class.java))
-                    activity?.finish()
-                }
             }
         }
 

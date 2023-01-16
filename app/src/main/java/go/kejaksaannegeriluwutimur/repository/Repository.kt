@@ -160,15 +160,15 @@ class Repository @Inject constructor(
 
     fun getLoadChat(
         token: String,
-        roomId: String,
+        roomId: Int,
     ) = apiService.loadChat(
         token, roomId
     )
 
-    fun getListInAdmin(
-        token: String,
+        fun getListInAdmin(
+        token: String, search:String
     ) = apiService.listAdmin(
-        token
+        token, search
     )
 
     fun getListInKepalaDesa(

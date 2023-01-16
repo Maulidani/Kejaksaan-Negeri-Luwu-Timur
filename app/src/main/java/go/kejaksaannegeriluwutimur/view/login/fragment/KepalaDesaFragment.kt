@@ -102,12 +102,6 @@ class KepalaDesaFragment : Fragment() {
                 inputNik.isEnabled = true
                 inputPassword.isEnabled = true
                 Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
-
-                // test
-                if (state.message == ROLE_KEPALA_DESA) {
-                    startActivity(Intent(requireActivity(), HomeActivity::class.java))
-                    activity?.finish()
-                }
             }
         }
 

@@ -127,15 +127,16 @@ interface ApiService {
     @GET("chat/load/{token}/{room-id}")
     fun loadChat(
         @Path("token") token: String,
-        @Path("room-id") roomId: String
+        @Path("room-id") roomId: Int
     ): Call<Model.DataArrayResponse>
 
-    @GET("chat/listAdmin/{token}")
+    @GET("chat/listAdmin/{token}/{search}")
     fun listAdmin(
-        @Path("token") token: String
+        @Path("token") token: String,
+        @Path("search") search: String,
     ): Call<Model.DataArrayResponse>
 
-    @GET("chat/listUser/{token}")
+       @GET("chat/listUser/{token}")
     fun listUser(
         @Path("token") token: String
     ): Call<Model.DataArrayResponse>

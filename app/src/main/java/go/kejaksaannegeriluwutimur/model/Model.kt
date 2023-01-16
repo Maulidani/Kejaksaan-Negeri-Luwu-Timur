@@ -12,7 +12,7 @@ class Model {
     data class DataArrayResponse(
         val success: Boolean,
         val message: String,
-        val data: ArrayList<DataLoginResponse>,
+        val data: ArrayList<DataResponse>,
         val chat: ArrayList<Chat>,
     )
 

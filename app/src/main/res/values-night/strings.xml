@@ -86,4 +86,19 @@
     <string name="keluar_dari_akun_yang_login">Keluar dari akun yang login ?</string>
     <string name="tidak">Tidak</string>
     <string name="ya">Ya</string>
+    <string name="detail">Detail</string>
+    <string name="penyidik">Penyidik</string>
+    <string name="tersangka">Tersangka</string>
+    <string name="no_dan_tanggal_p_16">No dan Tanggal P.16</string>
+    <string name="tanggal_terima_berkas">Tanggal terima berkas</string>
+    <string name="no_dan_tanggal_spdp">No dan Tanggal SPDP</string>
+    <string name="no_dan_tanggal_p_16_a">No dan Tanggal P.16 A</string>
+    <string name="keterangan">Keterangan</string>
+    <string name="tanggal">Tanggal</string>
+    <string name="kasus">Kasus</string>
+    <string name="tahap_kasus">Tahap kasus</string>
+    <string name="status">Status</string>
+    <string name="kembali">Kembali</string>
+    <string name="pasal">Pasal</string>
+    <string name="cari">Cari</string>
 </resources>

@@ -26,7 +26,7 @@ object AppModule {
     //    @Singleton
 //    @Provides
 //    fun provideBaseUrl() = BASE_URL
-//
+
     @Singleton
     @Provides
     fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences =
@@ -63,7 +63,7 @@ object AppModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(BASE_URL)
+        .baseUrl(BASE_URL + "api/")
         .client(okHttpClient)
         .build()
 

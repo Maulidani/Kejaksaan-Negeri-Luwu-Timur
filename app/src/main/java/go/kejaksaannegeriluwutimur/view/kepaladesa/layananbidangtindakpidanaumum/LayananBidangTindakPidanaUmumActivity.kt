@@ -22,7 +22,6 @@ class LayananBidangTindakPidanaUmumActivity : AppCompatActivity() {
         setContentView(R.layout.activity_layanan_bidang_tindak_pidana_umum)
 
         setUpUI()
-
     }
 
     private fun setUpUI() {

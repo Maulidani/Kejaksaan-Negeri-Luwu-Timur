@@ -94,4 +94,12 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:${dagger_version}")
     implementation("com.google.dagger:hilt-android:${dagger_version}")
 
-}
+    // websocket client
+    def gustavoavila_websocket_client_version = "2.0.1"
+    implementation "dev.gustavoavila:java-android-websocket-client:${gustavoavila_websocket_client_version}"
+
+    // img animation
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    }

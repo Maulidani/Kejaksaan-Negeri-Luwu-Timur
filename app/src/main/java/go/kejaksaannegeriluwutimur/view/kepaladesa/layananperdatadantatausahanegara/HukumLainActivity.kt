@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.util.Patterns
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,27 +17,23 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.edit
+import androidx.documentfile.provider.DocumentFile
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import go.kejaksaannegeriluwutimur.R
 import go.kejaksaannegeriluwutimur.model.Model
 import go.kejaksaannegeriluwutimur.util.Constants
 import go.kejaksaannegeriluwutimur.util.Constants.HUKUM_LAIN
-import go.kejaksaannegeriluwutimur.util.Constants.RESPONSE_TOKEN_SALAH
 import go.kejaksaannegeriluwutimur.util.ScreenState
+import go.kejaksaannegeriluwutimur.util.SuccessPopUp
 import go.kejaksaannegeriluwutimur.util.Ui.setShowProgress
 import go.kejaksaannegeriluwutimur.view.login.LoginActivity
-import go.kejaksaannegeriluwutimur.view.util.AlertActivity
 import go.kejaksaannegeriluwutimur.viewmodel.layananperdatadantatausahanegara.HukumGratisDanLainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,6 +41,7 @@ class HukumLainActivity : AppCompatActivity() {
     @Inject
     lateinit var sp: SharedPreferences
     private val hukumGratisDanLainViewModel: HukumGratisDanLainViewModel by viewModels()
+    private val successPopUp = SuccessPopUp()
 
     private val type = HUKUM_LAIN
     private val imgBack: ImageView by lazy { findViewById(R.id.iv_back) }
@@ -74,45 +72,86 @@ class HukumLainActivity : AppCompatActivity() {
                 val sUri: Uri? = data.data
                 val sPath: String? = sUri?.path
 
+                sUri?.let {
+                    try {
+                        contentResolver.takePersistableUriPermission(
+                            it,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                        )
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Gagal pilih file",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+                val documentFile = sUri?.let { DocumentFile.fromSingleUri(applicationContext, it) }
+                val fileUri = documentFile?.uri
+                val path = fileUri?.path
+                val inputStream = sUri?.let { contentResolver.openInputStream(it) }
+
                 when (whichFile) {
                     listFile[0] -> {
-                        val file = File(sPath!!)
-                        val reqBodyFilePermohonan: RequestBody =
-                            file.asRequestBody("*/*".toMediaTypeOrNull())
-                        partDokumenTerkait = MultipartBody.Part.createFormData(
-                            "dokumen", file.name, reqBodyFilePermohonan
-                        )
-                        sUri.let {
-                            contentResolver.query(it, null, null, null, null)
-                        }?.use {
-                            val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                            val sizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
-                            it.moveToFirst()
-                            val fileInformation =
-                                it.getString(nameIndex) + " | " + it.getString(sizeIndex) + " kb"
-                            tvKeteranganFileDokumenTerkait.text = fileInformation
-                            tvKeteranganFileDokumenTerkait.setTextColor(getColor(R.color.green_40))
+                        if (documentFile!!.exists()) {
+                            val reqBodyDokumen: RequestBody = inputStream.let {
+                                it!!.readBytes().toRequestBody("*/*".toMediaTypeOrNull(), 0)
+                            }
+                            partDokumenTerkait = MultipartBody.Part.createFormData(
+                                "dokumen", "File", reqBodyDokumen
+                            )
+                            sUri.let {
+                                contentResolver.query(it, null, null, null, null)
+                            }?.use {
+                                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                                val sizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
+                                it.moveToFirst()
+                                val fileInformation =
+                                    it.getString(nameIndex) + " | " + it.getString(sizeIndex) + " kb"
+                                tvKeteranganFileDokumenTerkait.text = fileInformation
+                                tvKeteranganFileDokumenTerkait.setTextColor(getColor(R.color.green_40))
+                            }
+                            whichFile = ""
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Gagal pilih file",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
                         }
-                        whichFile = ""
+
                     }
                     listFile[1] -> {
-                        val file = File(sPath!!)
-                        val reqBodyKtp: RequestBody = file.asRequestBody("*/*".toMediaTypeOrNull())
-                        partKtp = MultipartBody.Part.createFormData(
-                            "ktp", file.name, reqBodyKtp
-                        )
-                        sUri.let {
-                            contentResolver.query(it, null, null, null, null)
-                        }?.use {
-                            val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                            val sizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
-                            it.moveToFirst()
-                            val fileInformation =
-                                it.getString(nameIndex) + " | " + it.getString(sizeIndex) + " kb"
-                            tvKeteranganFileKtp.text = fileInformation
-                            tvKeteranganFileKtp.setTextColor(getColor(R.color.green_40))
+                        if (documentFile!!.exists()) {
+                            val reqBodyKtp: RequestBody = inputStream.let {
+                                it!!.readBytes().toRequestBody("*/*".toMediaTypeOrNull(), 0)
+                            }
+                            partKtp = MultipartBody.Part.createFormData(
+                                "ktp", "File", reqBodyKtp
+                            )
+                            sUri.let {
+                                contentResolver.query(it, null, null, null, null)
+                            }?.use {
+                                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                                val sizeIndex = it.getColumnIndex(OpenableColumns.SIZE)
+                                it.moveToFirst()
+                                val fileInformation =
+                                    it.getString(nameIndex) + " | " + it.getString(sizeIndex) + " kb"
+                                tvKeteranganFileKtp.text = fileInformation
+                                tvKeteranganFileKtp.setTextColor(getColor(R.color.green_40))
+                            }
+                            whichFile = ""
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Gagal pilih file",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
                         }
-                        whichFile = ""
+
                     }
                     else -> {
                         whichFile = ""
@@ -165,20 +204,25 @@ class HukumLainActivity : AppCompatActivity() {
         }
         btnKirimData.setOnClickListener {
             if (!isBtnLoading && checkNullFields()) {
-                hukumGratisDanLainViewModel.kirimData(
-                    type,
-                    etNamaLengkap.text.toString(),
-                    etAlamat.text.toString(),
-                    etNomorHpWa.text.toString(),
-                    etEmail.text.toString(),
-                    etKategori.text.toString(),
-                    etBentukPermasalahan.text.toString(),
-                    etDetailPermasalahan.text.toString(),
-                    partDokumenTerkait!!,
-                    partKtp!!,
-                    sp.getString(Constants.PREF_USER_ID, null).toString(),
-                    sp.getString(Constants.PREF_USER_TOKEN, null).toString(),
-                )
+                if (Patterns.EMAIL_ADDRESS.matcher(etEmail.text.toString()).matches()) {
+                    hukumGratisDanLainViewModel.kirimData(
+                        type,
+                        etNamaLengkap.text.toString(),
+                        etAlamat.text.toString(),
+                        etNomorHpWa.text.toString(),
+                        etEmail.text.toString(),
+                        etKategori.text.toString(),
+                        etBentukPermasalahan.text.toString(),
+                        etDetailPermasalahan.text.toString(),
+                        partDokumenTerkait!!,
+                        partKtp!!,
+                        sp.getInt(Constants.PREF_USER_ID, 0).toString(),
+                        sp.getString(Constants.PREF_USER_TOKEN, null).toString(),
+                    )
+                } else {
+                    Toast.makeText(applicationContext, "Email tidak valid", Toast.LENGTH_SHORT)
+                        .show()
+                }
             } else {
                 Toast.makeText(applicationContext, "Lengkapi semua data", Toast.LENGTH_SHORT).show()
             }
@@ -199,35 +243,27 @@ class HukumLainActivity : AppCompatActivity() {
                 setFieldEnabled(false)
             }
             is ScreenState.Success -> {
-                if (state.data?.message == RESPONSE_TOKEN_SALAH) {
-                    Toast.makeText(
-                        applicationContext, Constants.MSG_TERJADI_KESALAHAN, Toast.LENGTH_SHORT
-                    ).show()
-                    startActivity(Intent(applicationContext, LoginActivity::class.java))
-                    finish()
-                }
                 isBtnLoading = false
                 btnKirimData.setShowProgress(false, "Kirim Data")
                 setFieldEnabled(true)
+                successPopUp.show(supportFragmentManager, "Chat pop-up")
+
+                if (state.data?.message == Constants.RESPONSE_TOKEN_SALAH) {
+                    Toast.makeText(
+                        applicationContext,
+                        Constants.MSG_TERJADI_KESALAHAN,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    sp.edit { clear() }
+                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                    finish()
+                }
             }
             is ScreenState.Error -> {
-//                isBtnLoading = false
-//                btnKirimData.setShowProgress(false, "Kirim Data")
-//                setFieldEnabled(true)
-//                Toast.makeText(applicationContext, state.message, Toast.LENGTH_SHORT).show()
-
-                CoroutineScope(Dispatchers.Main).launch {
-                    delay(2000)
-                    isBtnLoading = false
-                    btnKirimData.setShowProgress(false, "Kirim Data")
-                    setFieldEnabled(true)
-                    startActivity(
-                        Intent(applicationContext, AlertActivity::class.java).putExtra(
-                            "name", ""
-                        )
-                    )
-                }
-
+                isBtnLoading = false
+                btnKirimData.setShowProgress(false, "Kirim Data")
+                setFieldEnabled(true)
+                Toast.makeText(applicationContext, state.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
