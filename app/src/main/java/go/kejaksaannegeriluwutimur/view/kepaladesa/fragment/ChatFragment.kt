@@ -91,6 +91,8 @@ class ChatFragment : Fragment() {
         pbLoading = requireActivity().findViewById(R.id.pb_loading)
         srLoading = requireActivity().findViewById(R.id.sr_loading)
 
+        tvTimeChatAdmin.visibility = View.INVISIBLE
+        tvMessageChatAdmin.visibility = View.INVISIBLE
         tvCountUnreadChatAdmin.visibility = View.GONE
 
         imgChatAdmin.load("-") {
@@ -133,31 +135,25 @@ class ChatFragment : Fragment() {
             is ScreenState.Loading -> {
                 srLoading.isRefreshing = true
                 tvNameChatAdmin.visibility = View.INVISIBLE
-                tvTimeChatAdmin.visibility = View.INVISIBLE
-                tvMessageChatAdmin.visibility = View.INVISIBLE
                 tvCountUnreadChatAdmin.visibility = View.GONE
             }
             is ScreenState.Success -> {
                 srLoading.isRefreshing = false
+                tvNameChatAdmin.text = getString(R.string.admin_kejaksaan)
+                tvNameChatAdmin.visibility = View.VISIBLE
 
                 if (state.data?.data?.size != 0) {
-                    tvNameChatAdmin.text = getString(R.string.admin_kejaksaan)
-                    tvNameChatAdmin.visibility = View.VISIBLE
-
                     if (state.data?.chat?.size != 0) {
                         roomId = state.data?.chat?.get(0)?.room_id.toString()
                         tvCountUnreadChatAdmin.text =
                             state.data?.chat?.get(0)?.tidak_dibaca.toString()
                         tvCountUnreadChatAdmin.visibility = View.VISIBLE
                     } else {
-                        tvTimeChatAdmin.visibility = View.VISIBLE
                         tvCountUnreadChatAdmin.visibility = View.GONE
                     }
 
                 } else {
                     tvCountUnreadChatAdmin.visibility = View.GONE
-                    tvNameChatAdmin.text = getString(R.string.admin_kejaksaan)
-                    tvNameChatAdmin.visibility = View.VISIBLE
                     Toast.makeText(requireContext(), MSG_TERJADI_KESALAHAN, Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -172,6 +168,8 @@ class ChatFragment : Fragment() {
             }
             is ScreenState.Error -> {
                 srLoading.isRefreshing = false
+                tvNameChatAdmin.text = getString(R.string.admin_kejaksaan)
+                tvNameChatAdmin.visibility = View.VISIBLE
                 Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
             }
         }
@@ -182,10 +180,12 @@ class ChatFragment : Fragment() {
             is ScreenState.Loading -> {
                 srLoading.isRefreshing = true
                 tvNameChatAdmin.visibility = View.INVISIBLE
-                tvMessageChatAdmin.visibility = View.INVISIBLE
             }
             is ScreenState.Success -> {
                 srLoading.isRefreshing = false
+                tvNameChatAdmin.text = getString(R.string.admin_kejaksaan)
+                tvNameChatAdmin.visibility = View.VISIBLE
+
                 if (state.data?.success == true) {
                     startActivity(
                         Intent(requireActivity(), ChatContentsActivity::class.java)
@@ -195,9 +195,6 @@ class ChatFragment : Fragment() {
                     Toast.makeText(requireContext(), MSG_TERJADI_KESALAHAN, Toast.LENGTH_SHORT)
                         .show()
                 }
-                tvNameChatAdmin.text = getString(R.string.admin_kejaksaan)
-                tvNameChatAdmin.visibility = View.VISIBLE
-                tvMessageChatAdmin.visibility = View.VISIBLE
 
                 if (state.data?.message == RESPONSE_TOKEN_SALAH) {
                     Toast.makeText(requireContext(), MSG_TERJADI_KESALAHAN, Toast.LENGTH_SHORT)
@@ -211,7 +208,6 @@ class ChatFragment : Fragment() {
                 srLoading.isRefreshing = false
                 tvNameChatAdmin.text = getString(R.string.admin_kejaksaan)
                 tvNameChatAdmin.visibility = View.VISIBLE
-                tvMessageChatAdmin.visibility = View.VISIBLE
                 Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
             }
         }

@@ -59,21 +59,29 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_header">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cv_rv"
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/sr_loading"
                     android:layout_width="match_parent"
                     android:layout_height="380dp"
-                    app:cardCornerRadius="0dp"
-                    app:cardElevation="1dp"
                     app:layout_constraintBottom_toTopOf="@+id/cl_send_message"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_message"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cv_rv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:listitem="@layout/item_message" />
-                </com.google.android.material.card.MaterialCardView>
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="1dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_message"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clipToPadding="false"
+                            android:paddingBottom="6dp"
+                            tools:listitem="@layout/item_message" />
+                    </com.google.android.material.card.MaterialCardView>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_send_message"
