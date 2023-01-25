@@ -184,6 +184,10 @@ class ChatPopUp : DialogFragment() {
                 srLoading.isRefreshing = false
                 if (state.data?.success == true) {
                     roomId = state.data.data.id.toString()
+                    messageChatViewModel.loadChat(
+                        roomId,
+                        sp.getString(PREF_USER_TOKEN, null).toString()
+                    )
                 } else {
                     Toast.makeText(
                         requireContext(),

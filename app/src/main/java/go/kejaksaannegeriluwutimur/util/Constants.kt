@@ -3,8 +3,8 @@ package go.kejaksaannegeriluwutimur.util
 object Constants {
 
     // api network
-    const val BASE_URL = "http://192.168.205.86:8000/"
-    const val WEBSOCKET_URL = "ws://192.168.205.86:6001/app/qwerty?protocol=7&client=js&version=4.3.1&flash=false"
+    const val BASE_URL = "http://192.168.84.86:8000/"
+    const val WEBSOCKET_URL = "ws://192.168.84.86:6001/app/qwerty?protocol=7&client=js&version=4.3.1&flash=false"
 
     // response network
     const val RESPONSE_TOKEN_SALAH = "Token Kadaluwarsa"
